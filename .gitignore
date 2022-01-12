@@ -94,6 +94,9 @@ dist
 # Serverless directories
 .serverless/
 
+# IDE / Editor
+.idea
+
 # FuseBox cache
 .fusebox/
 
@@ -102,3 +105,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Service worker
+sw.*
+
+# macOS
+.DS_Store
+
+# Vim swap files
+*.swp
