@@ -1,26 +1,23 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col class="col-3">
-        <RouteList />
-      </b-col>
-      <b-col class="col-9">
-        <MockList />
-      </b-col>
-    </b-row>
-  </b-container>
+  <div />
 </template>
 
 <script>
-
-import MockList from '../components/MockList'
-import RouteList from '../components/RouteList'
+import Routes from '~/constants/Routes'
 
 export default {
-  name: 'IndexPage',
-  components: {
-    RouteList,
-    MockList
+  name: 'DefaultPage',
+  head () {
+    return {
+      title: 'Welcome'
+    }
+  },
+  created () {
+    this.$router.push(Routes.dashboard)
   }
 }
 </script>
+
+<style>
+
+</style>
