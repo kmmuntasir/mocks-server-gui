@@ -26,11 +26,6 @@ export default {
       type: Object,
       default: null
     }
-  },
-  date () {
-    return {
-      route: this.route
-    }
   }
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
   <div>
     <AppHeader />
-    <OverLayWidget />
     <b-container fluid class="defaultLayoutContainer">
       <b-row>
         <b-col class="col-10">
@@ -18,13 +17,11 @@
 <script>
 import AppHeader from '../components/common/AppHeader'
 import RightSideBar from '../components/common/RightSideBar'
-import OverLayWidget from '../components/common/OverLayWidget';
 
 export default {
   name: 'DefaultLayout',
   components: {
     AppHeader,
-    OverLayWidget,
     RightSideBar
   }
 }

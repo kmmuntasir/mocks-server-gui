@@ -6,7 +6,7 @@
       </h5>
       <b-collapse :id="`mock-${mock.id}`" class="mt-2">
         <b-card class="text-dark">
-          <p><span>Parent: </span><code>{{ mock.from }}</code></p>
+          <p><span>Parent: </span><code>{{ getMockParent(mock) }}</code></p>
           <p>Applied Routes Variants:</p>
           <b-button v-for="route in mock.routesVariants" :key="route" block variant="light" class="text-left">
             {{ route }}
@@ -26,9 +26,9 @@ export default {
       default: null
     }
   },
-  date () {
-    return {
-      mock: this.mock
+  methods: {
+    getMockParent (mock) {
+      return mock.from ?? 'No Parent'
     }
   }
 }
