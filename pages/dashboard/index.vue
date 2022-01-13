@@ -13,8 +13,8 @@
 
 <script>
 
-import MockList from '../../components/MockList'
-import RouteList from '../../components/RouteList'
+import MockList from '../../components/dashboard/MockList'
+import RouteList from '../../components/dashboard/RouteList'
 
 export default {
   name: 'DashboardPage',

@@ -1,8 +1,8 @@
 <template>
   <b-card
-    border-variant="primary"
+    border-variant="dark"
     header="Available Routes"
-    header-bg-variant="primary"
+    header-bg-variant="dark"
     header-text-variant="white"
     header-class="h4 text-center"
   >

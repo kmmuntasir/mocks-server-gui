@@ -3,7 +3,7 @@
     <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand class="brandName">
         <span>
-          Mocks-Server-GUI
+          {{ Locale.BRAND_NAME }}
         </span>
         <span class="pageName bg-info btn-sm ml-2">
           {{ $route.name }}
@@ -18,12 +18,18 @@
 </template>
 
 <script>
+import Locale from '../../constants/Locale'
 import NavBar from './NavBar'
 
 export default {
   name: 'AppHeader',
   components: {
     NavBar
+  },
+  data () {
+    return {
+      Locale
+    }
   }
 }
 </script>

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Routes from '../constants/Routes'
+import Routes from '../../constants/Routes'
 
 export default {
   name: 'NavBar',

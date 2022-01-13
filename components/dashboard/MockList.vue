@@ -13,9 +13,7 @@
         </h4>
       </div>
       <div class="float-right">
-        <b-input-group size="sm" prepend="Search">
-          <b-form-input type="text" />
-        </b-input-group>
+        <b-form-input size="sm" type="text" placeholder="Type to Search..." />
       </div>
     </template>
     <b-container fluid>
