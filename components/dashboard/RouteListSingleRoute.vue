@@ -8,6 +8,7 @@
         <b-card>
           <p><span>URL: </span><code>{{ route.url }}</code></p>
           <p><span>Method: </span><code>{{ route.method }}</code></p>
+          <p>Variants:</p>
           <b-button v-for="routeVariant in route.variants" :key="routeVariant" class="text-left" block variant="primary">
             {{ routeVariant }}
           </b-button>

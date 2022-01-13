@@ -19,7 +19,7 @@
     <b-container fluid>
       <b-row>
         <b-col v-for="mock in mocks" :key="mock" class="col-4">
-          <SingleMockCard />
+          <SingleMockCard :mock="mock" />
         </b-col>
       </b-row>
     </b-container>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import mocksApi from '../../network/apis/mocksApi'
+import Locale from '../../constants/Locale'
 import SingleMockCard from './SingleMockCard'
 
 export default {
@@ -36,7 +38,25 @@ export default {
   },
   data () {
     return {
-      mocks: [1, 2, 3, 4, 5]
+      mocks: []
+    }
+  },
+  created () {
+    this.fetchMocks()
+  },
+  methods: {
+    async fetchMocks () {
+      await this.$store.commit('loader/show')
+      const response = await mocksApi.fetchMocksList()
+      if (response.success) {
+        this.mocks = response.data
+      } else {
+        await this.$store.commit('toast/show', {
+          text: Locale.AN_ERROR_OCCURRED,
+          variant: 'danger'
+        })
+      }
+      await this.$store.commit('loader/hide')
     }
   }
 }
