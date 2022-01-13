@@ -1,11 +1,23 @@
 <template>
   <b-card
     border-variant="dark"
-    header="Available Mocks"
+    header-tag="header"
     header-bg-variant="dark"
     header-text-variant="white"
     header-class="h4 text-center"
   >
+    <template #header>
+      <div class="float-left">
+        <h4 class="mb-0 text-left">
+          Available Mocks
+        </h4>
+      </div>
+      <div class="float-right">
+        <b-input-group size="sm" prepend="Search">
+          <b-form-input type="text" />
+        </b-input-group>
+      </div>
+    </template>
     <b-container fluid>
       <b-row>
         <b-col v-for="mock in mocks" :key="mock" class="col-4">
