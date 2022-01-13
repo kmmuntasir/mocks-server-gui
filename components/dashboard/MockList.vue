@@ -28,6 +28,7 @@
 
 <script>
 import mocksApi from '../../network/apis/mocksApi'
+import Locale from '../../constants/Locale'
 import SingleMockCard from './SingleMockCard'
 
 export default {
@@ -45,10 +46,17 @@ export default {
   },
   methods: {
     async fetchMocks () {
+      await this.$store.commit('loader/show')
       const response = await mocksApi.fetchMocksList()
       if (response.success) {
         this.mocks = response.data
+      } else {
+        await this.$store.commit('toast/show', {
+          text: Locale.AN_ERROR_OCCURRED,
+          variant: 'danger'
+        })
       }
+      await this.$store.commit('loader/hide')
     }
   }
 }

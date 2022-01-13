@@ -12,6 +12,7 @@
 
 <script>
 import routesApi from '../../network/apis/routesApi'
+import Locale from '../../constants/Locale'
 import RouteListSingleRoute from './RouteListSingleRoute'
 
 export default {
@@ -29,10 +30,17 @@ export default {
   },
   methods: {
     async fetchRoutes () {
+      await this.$store.commit('loader/show')
       const response = await routesApi.fetchRoutesList()
       if (response.success) {
         this.routes = response.data
+      } else {
+        await this.$store.commit('toast/show', {
+          text: Locale.AN_ERROR_OCCURRED,
+          variant: 'danger'
+        })
       }
+      await this.$store.commit('loader/hide')
     }
   }
 }

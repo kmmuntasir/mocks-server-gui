@@ -79,6 +79,7 @@
 
 <script>
 import serverSettingsApi from '../../network/apis/serverSettingsApi'
+import Locale from '../../constants/Locale'
 
 export default {
   name: 'RightSideBar',
@@ -96,16 +97,30 @@ export default {
   },
   methods: {
     async fetchServerSettings () {
+      await this.$store.commit('loader/show')
       const response = await serverSettingsApi.fetchSettings()
       if (response.success) {
         this.server.settings = response.data
+      } else {
+        await this.$store.commit('toast/show', {
+          text: Locale.AN_ERROR_OCCURRED,
+          variant: 'danger'
+        })
       }
+      await this.$store.commit('loader/hide')
     },
     async fetchServerVersion () {
+      await this.$store.commit('loader/show')
       const response = await serverSettingsApi.fetchServerVersion()
       if (response.success) {
         this.server.version = response.data.version
+      } else {
+        await this.$store.commit('toast/show', {
+          text: Locale.AN_ERROR_OCCURRED,
+          variant: 'danger'
+        })
       }
+      await this.$store.commit('loader/hide')
     }
   }
 }
