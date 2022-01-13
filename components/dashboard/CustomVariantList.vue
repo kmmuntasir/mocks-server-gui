@@ -6,26 +6,35 @@
     header-text-variant="white"
   >
     <template #header>
-      <CustomCardHeader title="Available Routes" />
+      <CustomCardHeader title="Custom Variants" />
     </template>
-    <RouteListSingleRoute v-for="route in routes" :key="route.id" :route="route" />
+    <b-button
+      v-for="customVariant in customVariants"
+      :key="customVariant"
+      class="mb-1 mt-0 text-left p-0"
+      variant="dark"
+      block
+      disabled
+    >
+      <p class="mb-0 p-2">
+        {{ customVariant }}
+      </p>
+    </b-button>
   </b-card>
 </template>
 
 <script>
-import routesApi from '../../network/apis/routesApi'
+import customVariantApi from '../../network/apis/customVariantApi'
 import CustomCardHeader from '../common/CustomCardHeader'
-import RouteListSingleRoute from './RouteListSingleRoute'
 
 export default {
-  name: 'RouteList',
+  name: 'CustomVariantList',
   components: {
-    CustomCardHeader,
-    RouteListSingleRoute
+    CustomCardHeader
   },
   data () {
     return {
-      routes: []
+      customVariants: []
     }
   },
   created () {
@@ -33,9 +42,9 @@ export default {
   },
   methods: {
     async fetchRoutes () {
-      const response = await routesApi.fetchRoutesList()
+      const response = await customVariantApi.fetchCustomVariantsList()
       if (response.success) {
-        this.routes = response.data
+        this.customVariants = response.data
       }
     }
   }

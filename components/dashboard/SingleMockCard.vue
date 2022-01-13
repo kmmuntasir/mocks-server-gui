@@ -1,9 +1,9 @@
 <template>
   <div>
-    <b-button class="mb-2 text-left p-0" variant="dark" block>
-      <h5 v-b-toggle="`mock-${mock.id}`" size="sm" class="mb-0 p-2 pt-4 pb-4 text-center">
+    <b-button class="mb-1 text-left p-0" variant="dark" block>
+      <p v-b-toggle="`mock-${mock.id}`" size="sm" class="mb-0 p-2">
         {{ mock.id }}
-      </h5>
+      </p>
       <b-collapse :id="`mock-${mock.id}`" class="mt-2">
         <b-card class="text-dark">
           <p><span>Parent: </span><code>{{ getMockParent(mock) }}</code></p>

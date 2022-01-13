@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button class="mb-2 text-left p-0" variant="light" block>
+    <b-button class="mb-1 text-left p-0" variant="light" block>
       <p v-b-toggle="`route-${route.id}`" size="sm" class="mb-0 p-2">
         {{ route.id }}
       </p>

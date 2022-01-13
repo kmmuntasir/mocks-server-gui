@@ -4,36 +4,24 @@
     header-tag="header"
     header-bg-variant="dark"
     header-text-variant="white"
-    header-class="h4 text-center"
   >
     <template #header>
-      <div class="float-left">
-        <h4 class="mb-0 text-left">
-          Available Mocks
-        </h4>
-      </div>
-      <div class="float-right">
-        <b-form-input size="sm" type="text" placeholder="Type to Search..." />
-      </div>
+      <CustomCardHeader title="Available Mocks" />
     </template>
-    <b-container fluid>
-      <b-row>
-        <b-col v-for="mock in mocks" :key="mock" class="col-4">
-          <SingleMockCard :mock="mock" />
-        </b-col>
-      </b-row>
-    </b-container>
+    <SingleMockCard v-for="mock in mocks" :key="mock.id" :mock="mock" />
   </b-card>
 </template>
 
 <script>
 import mocksApi from '../../network/apis/mocksApi'
+import CustomCardHeader from '../common/CustomCardHeader'
 import SingleMockCard from './SingleMockCard'
 
 export default {
   name: 'MockList',
   components: {
-    SingleMockCard
+    SingleMockCard,
+    CustomCardHeader
   },
   data () {
     return {
@@ -55,5 +43,11 @@ export default {
 </script>
 
 <style scoped>
+
+div.card-body {
+  padding: 5px;
+  height: calc(100vh - 140px) !important;
+  overflow-y: scroll;
+}
 
 </style>

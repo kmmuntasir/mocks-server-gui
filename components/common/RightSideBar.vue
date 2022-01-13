@@ -4,72 +4,74 @@
     header="Server Info"
     header-bg-variant="dark"
     header-text-variant="white"
-    header-class="h4 text-center"
+    header-class="h5 text-right"
   >
+    <b-button class="mb-1 text-left p-0" variant="primary" block>
+      <p class="mb-0 p-2 text-center">
+        Active Mock
+      </p>
+      <div class="bg-light rounded text-dark text-center p-2">
+        {{ server.settings.mock }}
+      </div>
+    </b-button>
     <b-list-group>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        Server Version
-        <b-badge variant="dark" pill>
+        <small>Server Version</small>
+        <b-badge variant="secondary" pill>
           {{ server.version }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        Current Mock
-        <b-badge variant="dark" pill>
-          {{ server.settings.mock }}
-        </b-badge>
-      </b-list-group-item>
-      <b-list-group-item class="d-flex justify-content-between align-items-center">
-        API Delay
-        <b-badge variant="dark" pill>
+        <small>API Delay</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.delay }} ms
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        Host
-        <b-badge variant="dark" pill>
+        <small>Host</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.host }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        Port
-        <b-badge variant="dark" pill>
+        <small>Port</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.port }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        Log Mode
-        <b-badge variant="dark" pill>
+        <small>Log Mode</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.log }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        CORS Policy
-        <b-badge variant="dark" pill>
+        <small>CORS Policy</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.cors }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        CORS Pre-Flight
-        <b-badge variant="dark" pill>
+        <small>CORS Pre-Flight</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.corsPreFlight }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        Mock Path
-        <b-badge variant="dark" pill>
+        <small>Mock Path</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.path }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        Settings API Path
-        <b-badge variant="dark" pill>
+        <small>Admin API Path</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.adminApiPath }}
         </b-badge>
       </b-list-group-item>
       <b-list-group-item class="d-flex justify-content-between align-items-center">
-        CLI Enabled
-        <b-badge variant="dark" pill>
+        <small>CLI Enabled</small>
+        <b-badge variant="secondary" pill>
           {{ server.settings.cli }}
         </b-badge>
       </b-list-group-item>
@@ -112,11 +114,12 @@ export default {
 </script>
 
 <style scoped>
-  div.card {
-    min-height: calc(100vh - 86px);
-  }
-
   div.card-body {
     padding: 5px;
+    height: calc(100vh - 140px) !important;
+    overflow-y: scroll;
+  }
+  .list-group-item {
+    padding: 0.75rem 0.50rem;
   }
 </style>
