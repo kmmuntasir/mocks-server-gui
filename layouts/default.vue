@@ -18,10 +18,7 @@
     </header>
     <b-container fluid class="defaultLayoutContainer">
       <b-row>
-        <b-col class="col-3">
-          <RouteList />
-        </b-col>
-        <b-col class="col-7">
+        <b-col class="col-10">
           <Nuxt />
         </b-col>
         <b-col class="col-2">
@@ -34,14 +31,12 @@
 
 <script>
 import NavBar from '../components/NavBar'
-import RouteList from '../components/RouteList'
 import RightSideBar from '../components/RightSideBar'
 
 export default {
   name: 'DefaultLayout',
   components: {
     NavBar,
-    RouteList,
     RightSideBar
   }
 }
