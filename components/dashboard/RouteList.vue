@@ -14,7 +14,7 @@
         />
       </template>
       <RouteListSingleRoute
-        v-for="route in routes"
+        v-for="route in visibleRoutes"
         :key="route.id"
         :route="route"
         @loading="handleLoader"
@@ -40,20 +40,49 @@ export default {
       loading: true
     }
   },
+  computed: {
+    visibleRoutes () {
+      const visibleList = []
+      this.routes.forEach((route) => {
+        if (route.show) {
+          visibleList.push(route.data)
+        }
+      })
+      return visibleList
+    }
+  },
   created () {
     this.fetchRoutes()
   },
   methods: {
+    makeFilterable (route) {
+      return route.map((route) => {
+        return {
+          data: route,
+          show: true
+        }
+      })
+    },
     async fetchRoutes () {
       this.loading = true
       const response = await routesApi.fetchRoutesList()
       if (response.success) {
-        this.routes = response.data
+        this.routes = this.makeFilterable(response.data)
       }
       this.loading = false
     },
     searchRoutes (searchText) {
-      /// ToDo: Implement search
+      this.loading = true
+      if (searchText === '') {
+        this.routes.forEach((route) => {
+          route.show = true
+        })
+      } else {
+        this.routes.forEach((route) => {
+          route.show = route.data.id.includes(searchText)
+        })
+      }
+      this.loading = false
     },
     handleLoader (loading) {
       this.loading = loading

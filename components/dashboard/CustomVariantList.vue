@@ -54,7 +54,7 @@ export default {
       const visibleList = []
       this.customVariants.forEach((variant) => {
         if (variant.show) {
-          visibleList.push(variant.id)
+          visibleList.push(variant.data)
         }
       })
       return visibleList
@@ -75,7 +75,7 @@ export default {
     makeFilterable (variants) {
       return variants.map((variant) => {
         return {
-          id: variant,
+          data: variant,
           show: true
         }
       })
@@ -104,7 +104,7 @@ export default {
         })
       } else {
         this.customVariants.forEach((variant) => {
-          variant.show = variant.id.includes(searchText)
+          variant.show = variant.data.includes(searchText)
         })
       }
       this.loading = false
