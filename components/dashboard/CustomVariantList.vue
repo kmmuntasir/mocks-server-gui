@@ -18,7 +18,7 @@
         />
       </template>
       <b-button
-        v-for="customVariant in customVariants"
+        v-for="customVariant in visibleVariants"
         :key="customVariant"
         class="mb-1 mt-0 text-left p-0"
         variant="dark"
@@ -49,6 +49,17 @@ export default {
       loading: true
     }
   },
+  computed: {
+    visibleVariants () {
+      const visibleList = []
+      this.customVariants.forEach((variant) => {
+        if (variant.show) {
+          visibleList.push(variant.id)
+        }
+      })
+      return visibleList
+    }
+  },
   created () {
     this.fetchVariants()
   },
@@ -61,11 +72,19 @@ export default {
     })
   },
   methods: {
+    makeFilterable (variants) {
+      return variants.map((variant) => {
+        return {
+          id: variant,
+          show: true
+        }
+      })
+    },
     async fetchVariants () {
       this.loading = true
       const response = await customVariantApi.fetchCustomVariantsList()
       if (response.success) {
-        this.customVariants = response.data
+        this.customVariants = this.makeFilterable(response.data)
       }
       this.loading = false
     },
@@ -78,7 +97,17 @@ export default {
       this.loading = false
     },
     searchVariants (searchText) {
-      /// ToDo: Implement search
+      this.loading = true
+      if (searchText === '') {
+        this.customVariants.forEach((variant) => {
+          variant.show = true
+        })
+      } else {
+        this.customVariants.forEach((variant) => {
+          variant.show = variant.id.includes(searchText)
+        })
+      }
+      this.loading = false
     },
     handleLoader (loading) {
       this.loading = loading
