@@ -5,12 +5,31 @@
         {{ route.id }}
       </p>
       <b-collapse :id="`route-${route.id}`" class="mt-2">
-        <b-card>
+        <b-card class="text-dark">
           <p><span>URL: </span><code>{{ route.url }}</code></p>
           <p><span>Method: </span><code>{{ route.method }}</code></p>
-          <p>Variants:</p>
-          <b-button v-for="routeVariant in route.variants" :key="routeVariant" class="text-left" block variant="primary">
-            {{ routeVariant }}
+          <hr>
+          <b-button
+            v-for="routeVariant in route.variants"
+            :key="routeVariant"
+            :disabled="checkIfVariantIsActive(routeVariant)"
+            class="text-left d-flex"
+            block
+            :variant="checkIfVariantIsActive(routeVariant) ? 'success' : 'outline-success'"
+            :title="checkIfVariantIsActive(routeVariant) ? '': 'Click to Apply this Variant'"
+            @click="applyVariant(routeVariant)"
+          >
+            <p class="alert-content-p mb-0">
+              {{ getRouteAndVariantFromRouteId(routeVariant).variant }}
+            </p>
+            <b-button
+              v-if="checkIfVariantIsActive(routeVariant)"
+              variant="light"
+              size="sm"
+              class="ml-auto"
+            >
+              <BIconCheck2 />
+            </b-button>
           </b-button>
         </b-card>
       </b-collapse>
@@ -19,12 +38,43 @@
 </template>
 
 <script>
+import { BIconCheck2 } from 'bootstrap-vue'
+import routesVariants from '../../helpers/routesVariants'
+import customVariantApi from '../../network/apis/customVariantApi'
+import RootEvent from '../../constants/RootEvent'
+
 export default {
   name: 'RouteListSingleRoute',
+  components: {
+    BIconCheck2
+  },
   props: {
     route: {
       type: Object,
       default: null
+    }
+  },
+  data () {
+    return {
+      getRouteAndVariantFromRouteId: routesVariants.getRouteAndVariantFromRouteId,
+      activeVariants: routesVariants.getActiveVariants()
+    }
+  },
+  mounted () {
+    this.$root.$on(RootEvent.APPLY_VARIANT, (variant) => {
+      this.activeVariants = routesVariants.getActiveVariants()
+    })
+  },
+  methods: {
+    async applyVariant (routeVariant) {
+      const response = await customVariantApi.applyCustomVariant(routeVariant)
+      if (response.success) {
+        routesVariants.apply(routeVariant)
+        this.$root.$emit(RootEvent.APPLY_VARIANT, routeVariant)
+      }
+    },
+    checkIfVariantIsActive (routeVariant) {
+      return this.activeVariants.includes(routeVariant)
     }
   }
 }

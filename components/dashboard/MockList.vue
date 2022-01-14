@@ -13,7 +13,6 @@
       :key="mock.id"
       :mock="storeMockAppliedRoutes(mock)"
       :active="mock.id === currentMock"
-      @changeMock="changeMock"
     />
   </b-card>
 </template>
@@ -22,6 +21,7 @@
 import mocksApi from '../../network/apis/mocksApi'
 import settings from '../../helpers/settings'
 import routesVariants from '../../helpers/routesVariants'
+import RootEvent from '../../constants/RootEvent'
 import CustomCardHeader from '../common/CustomCardHeader'
 import SingleMockCard from './SingleMockCard'
 
@@ -40,16 +40,17 @@ export default {
   created () {
     this.fetchMocks()
   },
+  mounted () {
+    this.$root.$on(RootEvent.UPDATE_MOCK, (mock) => {
+      this.currentMock = mock.id
+    })
+  },
   methods: {
     async fetchMocks () {
       const response = await mocksApi.fetchMocksList()
       if (response.success) {
         this.mocks = response.data
       }
-    },
-    changeMock (mock) {
-      this.currentMock = mock.id
-      this.$root.$emit('updateMock', mock)
     },
     storeMockAppliedRoutes (mock) {
       if (mock.id === this.currentMock) {

@@ -28,9 +28,20 @@
             </b-button>
             <div class="clearfix" />
           </b-alert>
-          <p>Applied Routes Variants:</p>
-          <b-button v-for="route in mock.routesVariants" :key="route" block variant="light" class="text-left">
-            {{ route }}
+          <hr>
+          <b-button
+            v-for="route in mock.routesVariants"
+            :key="route"
+            block
+            variant="outline-secondary"
+            class="text-left d-flex"
+          >
+            <p class="alert-content-p mb-0">
+              {{ getRouteAndVariantFromRouteId(route).route }}
+            </p>
+            <b-button variant="primary" class="ml-auto" size="sm">
+              {{ getRouteAndVariantFromRouteId(route).variant }}
+            </b-button>
           </b-button>
         </b-card>
       </b-collapse>
@@ -42,6 +53,8 @@
 import { BIconCheck2 } from 'bootstrap-vue'
 import serverSettingsApi from '../../network/apis/serverSettingsApi'
 import settings from '../../helpers/settings'
+import routesVariants from '../../helpers/routesVariants'
+import RootEvent from '../../constants/RootEvent'
 
 export default {
   name: 'SingleMockCard',
@@ -58,6 +71,11 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      getRouteAndVariantFromRouteId: routesVariants.getRouteAndVariantFromRouteId
+    }
+  },
   methods: {
     getMockParent (mock) {
       return mock.from ?? 'No Parent'
@@ -68,7 +86,7 @@ export default {
       })
       if (response.success) {
         settings.update({ mock: mock.id })
-        this.$emit('changeMock', mock)
+        this.$root.$emit(RootEvent.UPDATE_MOCK, mock)
       }
     }
   }

@@ -6,7 +6,15 @@
     header-text-variant="white"
   >
     <template #header>
-      <CustomCardHeader title="Custom Variants" />
+      <CustomCardHeader
+        title="Custom Variants"
+        :reset="true"
+        :refresh="true"
+        :search="true"
+        @reset="resetVariants"
+        @refresh="fetchVariants"
+        @search="searchVariants"
+      />
     </template>
     <b-button
       v-for="customVariant in customVariants"
@@ -26,6 +34,7 @@
 <script>
 import customVariantApi from '../../network/apis/customVariantApi'
 import CustomCardHeader from '../common/CustomCardHeader'
+import RootEvent from '../../constants/RootEvent'
 
 export default {
   name: 'CustomVariantList',
@@ -38,14 +47,31 @@ export default {
     }
   },
   created () {
-    this.fetchRoutes()
+    this.fetchVariants()
+  },
+  mounted () {
+    this.$root.$on(RootEvent.UPDATE_MOCK, (mock) => {
+      this.fetchVariants()
+    })
+    this.$root.$on(RootEvent.APPLY_VARIANT, (variant) => {
+      this.fetchVariants()
+    })
   },
   methods: {
-    async fetchRoutes () {
+    async fetchVariants () {
       const response = await customVariantApi.fetchCustomVariantsList()
       if (response.success) {
         this.customVariants = response.data
       }
+    },
+    async resetVariants () {
+      const response = await customVariantApi.resetCustomVariants()
+      if (response.success) {
+        this.customVariants = []
+      }
+    },
+    searchVariants (searchText) {
+      /// ToDo: Implement search
     }
   }
 }

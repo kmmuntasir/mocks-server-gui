@@ -6,13 +6,33 @@
       </h5>
     </div>
     <div class="ml-auto d-flex">
-      <b-button variant="danger" class="cardTitleBarButton mb-0 mr-1" title="Clear All">
+      <b-button
+        v-if="reset"
+        variant="danger"
+        class="cardTitleBarButton mb-0 mr-1"
+        title="Clear All"
+        @click="resetFunction"
+      >
         <BIconXCircleFill />
       </b-button>
-      <b-button variant="info" class="cardTitleBarButton mb-0 mr-1" title="Fetch Latest Data">
+      <b-button
+        v-if="refresh"
+        variant="info"
+        class="cardTitleBarButton mb-0 mr-1"
+        title="Fetch Latest Data"
+        @click="refreshFunction"
+      >
         <BIconCloudDownload />
       </b-button>
-      <b-input class="cardTitleBarSearchInput" size="sm" type="text" placeholder="Search..." />
+      <b-input
+        v-if="search"
+        v-model="searchText"
+        class="cardTitleBarSearchInput"
+        size="sm"
+        type="text"
+        placeholder="Search..."
+        @keyup="searchFunction"
+      />
     </div>
   </div>
 </template>
@@ -29,6 +49,34 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    reset: {
+      type: Boolean,
+      default: false
+    },
+    refresh: {
+      type: Boolean,
+      default: false
+    },
+    search: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      searchText: ''
+    }
+  },
+  methods: {
+    resetFunction () {
+      this.$emit('reset')
+    },
+    refreshFunction () {
+      this.$emit('refresh')
+    },
+    searchFunction () {
+      this.$emit('search', this.searchText)
     }
   }
 }

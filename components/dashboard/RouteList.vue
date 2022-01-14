@@ -8,7 +8,11 @@
     <template #header>
       <CustomCardHeader title="Available Routes" />
     </template>
-    <RouteListSingleRoute v-for="route in routes" :key="route.id" :route="route" />
+    <RouteListSingleRoute
+      v-for="route in routes"
+      :key="route.id"
+      :route="route"
+    />
   </b-card>
 </template>
 
