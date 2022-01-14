@@ -8,12 +8,20 @@
     <template #header>
       <CustomCardHeader title="Available Mocks" />
     </template>
-    <SingleMockCard v-for="mock in mocks" :key="mock.id" :mock="mock" />
+    <SingleMockCard
+      v-for="mock in mocks"
+      :key="mock.id"
+      :mock="storeMockAppliedRoutes(mock)"
+      :active="mock.id === currentMock"
+      @changeMock="changeMock"
+    />
   </b-card>
 </template>
 
 <script>
 import mocksApi from '../../network/apis/mocksApi'
+import settings from '../../helpers/settings'
+import routesVariants from '../../helpers/routesVariants'
 import CustomCardHeader from '../common/CustomCardHeader'
 import SingleMockCard from './SingleMockCard'
 
@@ -25,7 +33,8 @@ export default {
   },
   data () {
     return {
-      mocks: []
+      mocks: [],
+      currentMock: settings.getCurrentMock()
     }
   },
   created () {
@@ -37,6 +46,16 @@ export default {
       if (response.success) {
         this.mocks = response.data
       }
+    },
+    changeMock (mock) {
+      this.currentMock = mock.id
+      this.$root.$emit('updateMock', mock)
+    },
+    storeMockAppliedRoutes (mock) {
+      if (mock.id === this.currentMock) {
+        routesVariants.setActiveVariants(mock.appliedRoutesVariants)
+      }
+      return mock
     }
   }
 }

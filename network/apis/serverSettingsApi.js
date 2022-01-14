@@ -12,5 +12,11 @@ export default {
     return await this.api.call({
       apiRoute: ApiRoute.getServerSettings
     })
+  },
+  async updateSettings (settings) {
+    return await this.api.call({
+      apiRoute: ApiRoute.updateServerSettings,
+      data: settings
+    })
   }
 }
