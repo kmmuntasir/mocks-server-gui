@@ -9,7 +9,7 @@
       <b-button
         v-if="reset"
         variant="danger"
-        class="cardTitleBarButton mb-0 mr-1"
+        class="cardTitleBarButton mb-0"
         title="Clear All"
         @click="resetFunction"
       >
@@ -18,7 +18,7 @@
       <b-button
         v-if="refresh"
         variant="info"
-        class="cardTitleBarButton mb-0 mr-1"
+        class="cardTitleBarButton mb-0 ml-1"
         title="Fetch Latest Data"
         @click="refreshFunction"
       >
@@ -27,7 +27,7 @@
       <b-input
         v-if="search"
         v-model="searchText"
-        class="cardTitleBarSearchInput"
+        class="cardTitleBarSearchInput ml-1"
         size="sm"
         type="text"
         placeholder="Search..."

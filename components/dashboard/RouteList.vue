@@ -6,7 +6,11 @@
     header-text-variant="white"
   >
     <template #header>
-      <CustomCardHeader title="Available Routes" />
+      <CustomCardHeader
+        title="Available Routes"
+        :search="true"
+        @search="searchRoutes"
+      />
     </template>
     <RouteListSingleRoute
       v-for="route in routes"
@@ -41,6 +45,9 @@ export default {
       if (response.success) {
         this.routes = response.data
       }
+    },
+    searchRoutes (searchText) {
+      /// ToDo: Implement search
     }
   }
 }

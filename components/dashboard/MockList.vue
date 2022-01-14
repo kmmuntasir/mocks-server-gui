@@ -6,7 +6,11 @@
     header-text-variant="white"
   >
     <template #header>
-      <CustomCardHeader title="Available Mocks" />
+      <CustomCardHeader
+        title="Available Mocks"
+        :search="true"
+        @search="searchMocks"
+      />
     </template>
     <SingleMockCard
       v-for="mock in mocks"
@@ -57,6 +61,9 @@ export default {
         routesVariants.setActiveVariants(mock.appliedRoutesVariants)
       }
       return mock
+    },
+    searchMocks (searchText) {
+      /// ToDo: Implement search
     }
   }
 }
