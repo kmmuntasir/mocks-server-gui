@@ -1,34 +1,36 @@
 <template>
-  <b-card
-    border-variant="dark"
-    header-tag="header"
-    header-bg-variant="dark"
-    header-text-variant="white"
-  >
-    <template #header>
-      <CustomCardHeader
-        title="Custom Variants"
-        :reset="true"
-        :refresh="true"
-        :search="true"
-        @reset="resetVariants"
-        @refresh="fetchVariants"
-        @search="searchVariants"
-      />
-    </template>
-    <b-button
-      v-for="customVariant in customVariants"
-      :key="customVariant"
-      class="mb-1 mt-0 text-left p-0"
-      variant="dark"
-      block
-      disabled
+  <b-overlay :show="loading">
+    <b-card
+      border-variant="dark"
+      header-tag="header"
+      header-bg-variant="dark"
+      header-text-variant="white"
     >
-      <p class="mb-0 p-2">
-        {{ customVariant }}
-      </p>
-    </b-button>
-  </b-card>
+      <template #header>
+        <CustomCardHeader
+          title="Custom Variants"
+          :reset="true"
+          :refresh="true"
+          :search="true"
+          @reset="resetVariants"
+          @refresh="fetchVariants"
+          @search="searchVariants"
+        />
+      </template>
+      <b-button
+        v-for="customVariant in customVariants"
+        :key="customVariant"
+        class="mb-1 mt-0 text-left p-0"
+        variant="dark"
+        block
+        disabled
+      >
+        <p class="mb-0 p-2">
+          {{ customVariant }}
+        </p>
+      </b-button>
+    </b-card>
+  </b-overlay>
 </template>
 
 <script>
@@ -43,7 +45,8 @@ export default {
   },
   data () {
     return {
-      customVariants: []
+      customVariants: [],
+      loading: true
     }
   },
   created () {
@@ -59,19 +62,26 @@ export default {
   },
   methods: {
     async fetchVariants () {
+      this.loading = true
       const response = await customVariantApi.fetchCustomVariantsList()
       if (response.success) {
         this.customVariants = response.data
       }
+      this.loading = false
     },
     async resetVariants () {
+      this.loading = true
       const response = await customVariantApi.resetCustomVariants()
       if (response.success) {
         this.customVariants = []
       }
+      this.loading = false
     },
     searchVariants (searchText) {
       /// ToDo: Implement search
+    },
+    handleLoader (loading) {
+      this.loading = loading
     }
   }
 }

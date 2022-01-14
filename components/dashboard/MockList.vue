@@ -1,24 +1,27 @@
 <template>
-  <b-card
-    border-variant="dark"
-    header-tag="header"
-    header-bg-variant="dark"
-    header-text-variant="white"
-  >
-    <template #header>
-      <CustomCardHeader
-        title="Available Mocks"
-        :search="true"
-        @search="searchMocks"
+  <b-overlay :show="loading">
+    <b-card
+      border-variant="dark"
+      header-tag="header"
+      header-bg-variant="dark"
+      header-text-variant="white"
+    >
+      <template #header>
+        <CustomCardHeader
+          title="Available Mocks"
+          :search="true"
+          @search="searchMocks"
+        />
+      </template>
+      <SingleMockCard
+        v-for="mock in mocks"
+        :key="mock.id"
+        :mock="storeMockAppliedRoutes(mock)"
+        :active="mock.id === currentMock"
+        @loading="handleLoader"
       />
-    </template>
-    <SingleMockCard
-      v-for="mock in mocks"
-      :key="mock.id"
-      :mock="storeMockAppliedRoutes(mock)"
-      :active="mock.id === currentMock"
-    />
-  </b-card>
+    </b-card>
+  </b-overlay>
 </template>
 
 <script>
@@ -38,7 +41,8 @@ export default {
   data () {
     return {
       mocks: [],
-      currentMock: settings.getCurrentMock()
+      currentMock: settings.getCurrentMock(),
+      loading: true
     }
   },
   created () {
@@ -51,10 +55,12 @@ export default {
   },
   methods: {
     async fetchMocks () {
+      this.loading = true
       const response = await mocksApi.fetchMocksList()
       if (response.success) {
         this.mocks = response.data
       }
+      this.loading = false
     },
     storeMockAppliedRoutes (mock) {
       if (mock.id === this.currentMock) {
@@ -64,6 +70,9 @@ export default {
     },
     searchMocks (searchText) {
       /// ToDo: Implement search
+    },
+    handleLoader (loading) {
+      this.loading = loading
     }
   }
 }

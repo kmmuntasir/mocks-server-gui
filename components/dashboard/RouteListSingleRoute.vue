@@ -67,11 +67,13 @@ export default {
   },
   methods: {
     async applyVariant (routeVariant) {
+      this.$emit('loading', true)
       const response = await customVariantApi.applyCustomVariant(routeVariant)
       if (response.success) {
         routesVariants.apply(routeVariant)
         this.$root.$emit(RootEvent.APPLY_VARIANT, routeVariant)
       }
+      this.$emit('loading', false)
     },
     checkIfVariantIsActive (routeVariant) {
       return this.activeVariants.includes(routeVariant)

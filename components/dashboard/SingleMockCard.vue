@@ -81,6 +81,7 @@ export default {
       return mock.from ?? 'No Parent'
     },
     async applyMock (mock) {
+      this.$emit('loading', true)
       const response = await serverSettingsApi.updateSettings({
         mock: mock.id
       })
@@ -88,6 +89,7 @@ export default {
         settings.update({ mock: mock.id })
         this.$root.$emit(RootEvent.UPDATE_MOCK, mock)
       }
+      this.$emit('loading', false)
     }
   }
 }

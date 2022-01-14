@@ -1,23 +1,26 @@
 <template>
-  <b-card
-    border-variant="dark"
-    header-tag="header"
-    header-bg-variant="dark"
-    header-text-variant="white"
-  >
-    <template #header>
-      <CustomCardHeader
-        title="Available Routes"
-        :search="true"
-        @search="searchRoutes"
+  <b-overlay :show="loading">
+    <b-card
+      border-variant="dark"
+      header-tag="header"
+      header-bg-variant="dark"
+      header-text-variant="white"
+    >
+      <template #header>
+        <CustomCardHeader
+          title="Available Routes"
+          :search="true"
+          @search="searchRoutes"
+        />
+      </template>
+      <RouteListSingleRoute
+        v-for="route in routes"
+        :key="route.id"
+        :route="route"
+        @loading="handleLoader"
       />
-    </template>
-    <RouteListSingleRoute
-      v-for="route in routes"
-      :key="route.id"
-      :route="route"
-    />
-  </b-card>
+    </b-card>
+  </b-overlay>
 </template>
 
 <script>
@@ -33,7 +36,8 @@ export default {
   },
   data () {
     return {
-      routes: []
+      routes: [],
+      loading: true
     }
   },
   created () {
@@ -41,13 +45,18 @@ export default {
   },
   methods: {
     async fetchRoutes () {
+      this.loading = true
       const response = await routesApi.fetchRoutesList()
       if (response.success) {
         this.routes = response.data
       }
+      this.loading = false
     },
     searchRoutes (searchText) {
       /// ToDo: Implement search
+    },
+    handleLoader (loading) {
+      this.loading = loading
     }
   }
 }
