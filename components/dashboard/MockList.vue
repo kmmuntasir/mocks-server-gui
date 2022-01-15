@@ -14,7 +14,7 @@
         />
       </template>
       <SingleMockCard
-        v-for="mock in mocks"
+        v-for="mock in visibleMocks"
         :key="mock.id"
         :mock="storeMockAppliedRoutes(mock)"
         :active="mock.id === currentMock"
@@ -45,6 +45,17 @@ export default {
       loading: true
     }
   },
+  computed: {
+    visibleMocks () {
+      const visibleList = []
+      this.mocks.forEach((mock) => {
+        if (mock.show) {
+          visibleList.push(mock.data)
+        }
+      })
+      return visibleList
+    }
+  },
   created () {
     this.fetchMocks()
   },
@@ -54,11 +65,19 @@ export default {
     })
   },
   methods: {
+    makeFilterable (mocks) {
+      return mocks.map((mock) => {
+        return {
+          data: mock,
+          show: true
+        }
+      })
+    },
     async fetchMocks () {
       this.loading = true
       const response = await mocksApi.fetchMocksList()
       if (response.success) {
-        this.mocks = response.data
+        this.mocks = this.makeFilterable(response.data)
       }
       this.loading = false
     },
@@ -69,7 +88,17 @@ export default {
       return mock
     },
     searchMocks (searchText) {
-      /// ToDo: Implement search
+      this.loading = true
+      if (searchText === '') {
+        this.mocks.forEach((mock) => {
+          mock.show = true
+        })
+      } else {
+        this.mocks.forEach((mock) => {
+          mock.show = mock.data.id.includes(searchText)
+        })
+      }
+      this.loading = false
     },
     handleLoader (loading) {
       this.loading = loading

@@ -55,8 +55,8 @@ export default {
     this.fetchRoutes()
   },
   methods: {
-    makeFilterable (route) {
-      return route.map((route) => {
+    makeFilterable (routes) {
+      return routes.map((route) => {
         return {
           data: route,
           show: true
