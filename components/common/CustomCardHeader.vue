@@ -24,6 +24,15 @@
       >
         <BIconCloudDownload />
       </b-button>
+      <b-button
+        v-if="customButton"
+        :variant="customButton.variant"
+        class="cardTitleBarButton mb-0"
+        :title="customButton.title"
+        @click="customButtonFunction"
+      >
+        <BIconXCircleFill />
+      </b-button>
       <b-input
         v-if="search"
         v-model="searchText"
@@ -58,6 +67,10 @@ export default {
       type: Boolean,
       default: false
     },
+    customButton: {
+      type: Object,
+      default: null
+    },
     search: {
       type: Boolean,
       default: false
@@ -74,6 +87,9 @@ export default {
     },
     refreshFunction () {
       this.$emit('refresh')
+    },
+    customButtonFunction () {
+      this.$emit('customButtonClicked')
     },
     searchFunction () {
       this.$emit('search', this.searchText)

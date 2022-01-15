@@ -1,5 +1,5 @@
 <template>
-  <b-overlay :show="loading">
+  <b-overlay :show="loading" class="mb-3">
     <b-card
       border-variant="dark"
       header-tag="header"
@@ -82,7 +82,7 @@ export default {
 
 div.card-body {
   padding: 5px;
-  height: calc(100vh - 140px) !important;
+  height: calc((100vh / 3 * 2) - 140px) !important;
   overflow-y: scroll;
 }
 

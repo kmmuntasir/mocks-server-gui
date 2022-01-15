@@ -3,6 +3,7 @@
     <b-row>
       <b-col class="col-4">
         <RouteList />
+        <CustomMockList />
       </b-col>
       <b-col class="col-4">
         <MockList />
@@ -22,11 +23,13 @@ import RouteList from '../../components/dashboard/RouteList'
 import CustomVariantList from '../../components/dashboard/CustomVariantList'
 import ActiveVariantList from '../../components/dashboard/ActiveVariantList'
 import SettingsMiddleware from '../../middleware/SettingsMiddleware'
+import CustomMockList from '../../components/dashboard/CustomMockList'
 
 export default {
   name: 'DashboardPage',
   components: {
     RouteList,
+    CustomMockList,
     MockList,
     CustomVariantList,
     ActiveVariantList

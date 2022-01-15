@@ -56,7 +56,8 @@ export default {
       'watch',
       'adminApiPath',
       'cli',
-      'activeVariants'
+      'activeVariants',
+      'customMocks'
     ]
     settingsKeyList.forEach((key) => {
       storage.remove(key)

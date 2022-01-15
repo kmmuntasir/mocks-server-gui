@@ -10,19 +10,24 @@
         <CustomCardHeader
           title="Active Variants"
           :search="true"
+          :custom-button="{
+            variant: 'info',
+            title: 'Save Active Variants as a Custom Mock'
+          }"
           @search="searchVariants"
+          @customButtonClicked="customButtonClicked"
         />
       </template>
       <b-button
-        v-for="customVariant in visibleVariants"
-        :key="customVariant"
+        v-for="activeVariant in visibleVariants"
+        :key="activeVariant"
         class="mb-1 mt-0 text-left p-0"
         variant="dark"
         block
         disabled
       >
         <p class="mb-0 p-2">
-          {{ customVariant }}
+          {{ activeVariant }}
         </p>
       </b-button>
     </b-card>
@@ -80,6 +85,9 @@ export default {
         })
       }
       this.loading = false
+    },
+    customButtonClicked () {
+
     },
     handleLoader (loading) {
       this.loading = loading
