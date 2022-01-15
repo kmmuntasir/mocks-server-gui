@@ -1,25 +1,22 @@
 <template>
   <b-navbar-nav class="ml-auto">
     <nuxt-link class="nav-link" :to="Routes.dashboard">
-      Dashboard
+      <small><BIconGrid1x2Fill /></small>
+      <span>Dashboard</span>
     </nuxt-link>
     <nuxt-link class="nav-link nuxt-link-active" :to="Routes.settings">
-      Settings
+      <small><BIconGearFill /></small>
+      <span>Settings</span>
     </nuxt-link>
     <div>
       <b-nav-item-dropdown right>
         <template #button-content>
-          User
+          <small><BIconEmojiSunglassesFill /></small>
+          <span>Misc.</span>
         </template>
-        <b-dropdown-item>
-          Profile
-        </b-dropdown-item>
-        <b-dropdown-item>
-          Sign Out
-        </b-dropdown-item>
-        <b-dropdown-divider />
         <b-dropdown-item :to="Routes.about">
-          About Mocks-Server-GUI
+          <small><BIconJournalText /></small>
+          <span>About Mocks-Server-GUI</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </div>
@@ -27,10 +24,17 @@
 </template>
 
 <script>
+import { BIconGearFill, BIconGrid1x2Fill, BIconEmojiSunglassesFill, BIconJournalText } from 'bootstrap-vue'
 import Routes from '../../constants/Routes'
 
 export default {
   name: 'NavBar',
+  components: {
+    BIconGearFill,
+    BIconGrid1x2Fill,
+    BIconEmojiSunglassesFill,
+    BIconJournalText
+  },
   data () {
     return {
       Routes

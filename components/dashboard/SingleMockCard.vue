@@ -33,8 +33,9 @@
             v-for="route in mock.routesVariants"
             :key="route"
             block
-            variant="outline-secondary"
+            variant="outline-dark"
             class="text-left d-flex"
+            disabled
           >
             <p class="alert-content-p mb-0">
               {{ getRouteAndVariantFromRouteId(route).route }}
