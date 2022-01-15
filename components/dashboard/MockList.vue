@@ -71,6 +71,7 @@ export default {
     storeMockAppliedRoutes (mock) {
       if (mock.id === this.currentMock) {
         routesVariants.setActiveVariants(mock.appliedRoutesVariants)
+        this.$root.$emit(RootEvent.APPLY_VARIANT)
       }
       return mock
     },

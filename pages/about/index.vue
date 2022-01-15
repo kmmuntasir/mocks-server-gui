@@ -19,8 +19,10 @@
 </template>
 
 <script>
+import SettingsMiddleware from '../../middleware/SettingsMiddleware'
 export default {
-  name: 'AboutPage'
+  name: 'AboutPage',
+  middleware: [SettingsMiddleware]
 }
 </script>
 

@@ -2,57 +2,57 @@ import ApiConstants from '../constants/ApiConstants'
 
 export default {
   getServerVersion: {
-    url: '/admin/about/',
+    url: '/about/',
     method: ApiConstants.GET
   },
   getServerSettings: {
-    url: '/admin/settings/',
+    url: '/settings/',
     method: ApiConstants.GET
   },
   updateServerSettings: {
-    url: '/admin/settings/',
+    url: '/settings/',
     method: ApiConstants.PATCH
   },
   getListOfMocks: {
-    url: '/admin/mocks/',
+    url: '/mocks/',
     method: ApiConstants.GET
   },
   getSingleMock: (mockId) => {
     return {
-      url: `/admin/mocks/${mockId}/`,
+      url: `/mocks/${mockId}/`,
       method: ApiConstants.GET
     }
   },
   getListOfRoutes: {
-    url: '/admin/routes/',
+    url: '/routes/',
     method: ApiConstants.GET
   },
   getSingleRoute: (routeId) => {
     return {
-      url: `/admin/routes/${routeId}/`,
+      url: `/routes/${routeId}/`,
       method: ApiConstants.GET
     }
   },
   getListOfRoutesVariants: {
-    url: '/admin/routes-variants/',
+    url: '/routes-variants/',
     method: ApiConstants.GET
   },
   getSingleRouteVariants: (variantId) => {
     return {
-      url: `/admin/routes-variants/${variantId}/`,
+      url: `/routes-variants/${variantId}/`,
       method: ApiConstants.GET
     }
   },
   getCurrentlyAppliedCustomRoutesVariants: {
-    url: '/admin/mock-custom-routes-variants/',
+    url: '/mock-custom-routes-variants/',
     method: ApiConstants.GET
   },
   applyCustomRouteVariant: {
-    url: '/admin/mock-custom-routes-variants/',
+    url: '/mock-custom-routes-variants/',
     method: ApiConstants.POST
   },
   resetCurrentlyAppliedCustomRoutesVariants: {
-    url: '/admin/mock-custom-routes-variants/',
+    url: '/mock-custom-routes-variants/',
     method: ApiConstants.DELETE
   }
 }

@@ -1,5 +1,6 @@
 export default {
-  BASE_URL: 'http://localhost:3100',
+  BASE_URL: '',
+  ADMIN_PATH: '',
   POST: 'POST',
   GET: 'GET',
   PUT: 'PUT',
@@ -10,7 +11,6 @@ export default {
     return {
       url: '',
       method: this.GET,
-      baseURL: this.BASE_URL,
       headers: {
         Accept: 'application/json'
       },

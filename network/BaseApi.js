@@ -1,5 +1,6 @@
 import axios from 'axios'
-import ApiConstants from '~/constants/ApiConstants'
+import ApiConstants from '../constants/ApiConstants'
+import application from '../helpers/application'
 
 export default {
   config: ApiConstants.DEFAULT_AXIOS_CONFIG(),
@@ -11,6 +12,7 @@ export default {
     data = null,
     urlParam = ''
   } = {}) {
+    this.config.baseURL = `${application.getSettings().baseUrl}${application.getSettings().adminPath}`
     this.config.url = apiRoute.url + urlParam
     const response = {
       success: false,

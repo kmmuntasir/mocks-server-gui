@@ -1,11 +1,30 @@
 <template>
   <b-card
     border-variant="dark"
-    header="Settings"
+    header-tag="header"
     header-bg-variant="dark"
     header-text-variant="white"
-    header-class="h4"
   >
+    <template #header>
+      <div class="d-flex">
+        <div>
+          <h5 class="mb-0 text-left">
+            Mock Settings
+          </h5>
+        </div>
+        <div class="ml-auto d-flex">
+          <b-button
+            variant="danger"
+            class="cardTitleBarButton mb-0"
+            title="Clear All"
+            @click="goToAppSettings"
+          >
+            <span>Change Application Settings</span>
+            <BIconArrowRightCircle />
+          </b-button>
+        </div>
+      </div>
+    </template>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -33,17 +52,38 @@
 </template>
 
 <script>
+import { BIconArrowRightCircle } from 'bootstrap-vue'
+import SettingsMiddleware from '../../middleware/SettingsMiddleware'
+import Routes from '../../constants/Routes'
+import application from '../../helpers/application'
+
 export default {
   name: 'SettingsPage',
+  components: {
+    BIconArrowRightCircle
+  },
+  middleware: [SettingsMiddleware],
   data () {
     return {
       rows: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    }
+  },
+  methods: {
+    goToAppSettings () {
+      if (confirm('This will remove current app settings. Are you sure?')) {
+        application.removeSettings()
+        this.$router.push(Routes.root)
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+  .cardTitleBarButton {
+    font-size: 0.8rem;
+    padding: 0.10rem 0.20rem;
+  }
   .td-sm {
     width: 50px !important;
   }

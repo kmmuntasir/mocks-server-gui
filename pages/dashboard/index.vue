@@ -19,6 +19,7 @@
 import MockList from '../../components/dashboard/MockList'
 import RouteList from '../../components/dashboard/RouteList'
 import CustomVariantList from '../../components/dashboard/CustomVariantList'
+import SettingsMiddleware from '../../middleware/SettingsMiddleware'
 
 export default {
   name: 'DashboardPage',
@@ -26,7 +27,8 @@ export default {
     RouteList,
     MockList,
     CustomVariantList
-  }
+  },
+  middleware: [SettingsMiddleware]
 }
 </script>
 

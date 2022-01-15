@@ -3,7 +3,7 @@
     <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand class="brandName">
         <span>
-          {{ Locale.BRAND_NAME }}
+          {{ appSettings.brandName }}
         </span>
         <span class="pageName bg-info btn-sm ml-2">
           {{ $route.name }}
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Locale from '../../constants/Locale'
+import application from '../../helpers/application'
 import NavBar from './NavBar'
 
 export default {
@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      Locale
+      appSettings: application.getSettings()
     }
   }
 }

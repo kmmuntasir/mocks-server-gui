@@ -59,10 +59,10 @@ export default {
     this.fetchVariants()
   },
   mounted () {
-    this.$root.$on(RootEvent.UPDATE_MOCK, (mock) => {
+    this.$root.$on(RootEvent.UPDATE_MOCK, () => {
       this.fetchVariants()
     })
-    this.$root.$on(RootEvent.APPLY_VARIANT, (variant) => {
+    this.$root.$on(RootEvent.APPLY_VARIANT, () => {
       this.fetchVariants()
     })
   },
