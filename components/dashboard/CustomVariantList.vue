@@ -35,6 +35,7 @@
 
 <script>
 import customVariantApi from '../../network/apis/customVariantApi'
+import search from '../../helpers/search'
 import CustomCardHeader from '../common/CustomCardHeader'
 import RootEvent from '../../constants/RootEvent'
 
@@ -51,13 +52,7 @@ export default {
   },
   computed: {
     visibleVariants () {
-      const visibleList = []
-      this.customVariants.forEach((variant) => {
-        if (variant.show) {
-          visibleList.push(variant.data)
-        }
-      })
-      return visibleList
+      return search.getFilteredList(this.customVariants)
     }
   },
   created () {
@@ -72,19 +67,11 @@ export default {
     })
   },
   methods: {
-    makeFilterable (variants) {
-      return variants.map((variant) => {
-        return {
-          data: variant,
-          show: true
-        }
-      })
-    },
     async fetchVariants () {
       this.loading = true
       const response = await customVariantApi.fetchCustomVariantsList()
       if (response.success) {
-        this.customVariants = this.makeFilterable(response.data)
+        this.customVariants = search.makeFilterable(response.data)
       }
       this.loading = false
     },

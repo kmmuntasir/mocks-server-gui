@@ -29,6 +29,7 @@ import mocksApi from '../../network/apis/mocksApi'
 import settings from '../../helpers/settings'
 import routesVariants from '../../helpers/routesVariants'
 import RootEvent from '../../constants/RootEvent'
+import search from '../../helpers/search'
 import CustomCardHeader from '../common/CustomCardHeader'
 import SingleMockCard from './SingleMockCard'
 
@@ -47,13 +48,7 @@ export default {
   },
   computed: {
     visibleMocks () {
-      const visibleList = []
-      this.mocks.forEach((mock) => {
-        if (mock.show) {
-          visibleList.push(mock.data)
-        }
-      })
-      return visibleList
+      return search.getFilteredList(this.mocks)
     }
   },
   created () {
@@ -65,19 +60,11 @@ export default {
     })
   },
   methods: {
-    makeFilterable (mocks) {
-      return mocks.map((mock) => {
-        return {
-          data: mock,
-          show: true
-        }
-      })
-    },
     async fetchMocks () {
       this.loading = true
       const response = await mocksApi.fetchMocksList()
       if (response.success) {
-        this.mocks = this.makeFilterable(response.data)
+        this.mocks = search.makeFilterable(response.data)
       }
       this.loading = false
     },

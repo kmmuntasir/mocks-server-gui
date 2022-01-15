@@ -25,6 +25,7 @@
 
 <script>
 import routesApi from '../../network/apis/routesApi'
+import search from '../../helpers/search'
 import CustomCardHeader from '../common/CustomCardHeader'
 import RouteListSingleRoute from './RouteListSingleRoute'
 
@@ -42,32 +43,18 @@ export default {
   },
   computed: {
     visibleRoutes () {
-      const visibleList = []
-      this.routes.forEach((route) => {
-        if (route.show) {
-          visibleList.push(route.data)
-        }
-      })
-      return visibleList
+      return search.getFilteredList(this.routes)
     }
   },
   created () {
     this.fetchRoutes()
   },
   methods: {
-    makeFilterable (routes) {
-      return routes.map((route) => {
-        return {
-          data: route,
-          show: true
-        }
-      })
-    },
     async fetchRoutes () {
       this.loading = true
       const response = await routesApi.fetchRoutesList()
       if (response.success) {
-        this.routes = this.makeFilterable(response.data)
+        this.routes = search.makeFilterable(response.data)
       }
       this.loading = false
     },
