@@ -11,39 +11,35 @@
         header-text-variant="white"
       >
         <b-form @submit.prevent="proceed">
-          <b-form-group
-            label="Brand Name"
-            description="This will be displayed as Logo"
-          >
+          <b-form-group label="Brand Name" description="This will be displayed as Logo">
             <b-form-input
               v-model="setup.brandName"
               placeholder="Example: My Awesome Mock-Server"
               required
             />
           </b-form-group>
-          <b-form-group
-            label="Base URL"
-          >
+          <b-form-group label="Base URL">
             <b-form-input
               v-model="setup.baseUrl"
               placeholder="Example: http://localhost:3000"
               required
             />
           </b-form-group>
-          <b-form-group
-            label="Admin API Path"
-          >
+          <b-form-group label="Admin API Path">
             <b-form-input
               v-model="setup.adminPath"
               placeholder="Example: /admin"
               required
             />
           </b-form-group>
+          <b-form-group label="Admin API URL">
+            <b-alert show variant="secondary">
+              <code>{{ setup.baseUrl }}{{ setup.adminPath }}</code>
+            </b-alert>
+          </b-form-group>
+          <hr>
           <b-form-group class="d-flex flex-row-reverse">
-            <b-button
-              type="submit"
-              variant="primary"
-            >
+            <b-button type="submit" variant="primary">
               Proceed
             </b-button>
           </b-form-group>
