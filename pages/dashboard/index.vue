@@ -9,6 +9,7 @@
       </b-col>
       <b-col class="col-4">
         <CustomVariantList />
+        <ActiveVariantList />
       </b-col>
     </b-row>
   </b-container>
@@ -19,6 +20,7 @@
 import MockList from '../../components/dashboard/MockList'
 import RouteList from '../../components/dashboard/RouteList'
 import CustomVariantList from '../../components/dashboard/CustomVariantList'
+import ActiveVariantList from '../../components/dashboard/ActiveVariantList'
 import SettingsMiddleware from '../../middleware/SettingsMiddleware'
 
 export default {
@@ -26,7 +28,8 @@ export default {
   components: {
     RouteList,
     MockList,
-    CustomVariantList
+    CustomVariantList,
+    ActiveVariantList
   },
   middleware: [SettingsMiddleware]
 }

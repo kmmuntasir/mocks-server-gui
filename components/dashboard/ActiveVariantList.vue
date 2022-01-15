@@ -1,5 +1,5 @@
 <template>
-  <b-overlay :show="loading" class="mb-3">
+  <b-overlay :show="loading">
     <b-card
       border-variant="dark"
       header-tag="header"
@@ -8,12 +8,8 @@
     >
       <template #header>
         <CustomCardHeader
-          title="Custom Variants"
-          :reset="true"
-          :refresh="true"
+          title="Active Variants"
           :search="true"
-          @reset="resetVariants"
-          @refresh="fetchVariants"
           @search="searchVariants"
         />
       </template>
@@ -34,25 +30,25 @@
 </template>
 
 <script>
-import customVariantApi from '../../network/apis/customVariantApi'
 import search from '../../helpers/search'
+import routesVariants from '../../helpers/routesVariants'
 import CustomCardHeader from '../common/CustomCardHeader'
 import RootEvent from '../../constants/RootEvent'
 
 export default {
-  name: 'CustomVariantList',
+  name: 'ActiveVariantList',
   components: {
     CustomCardHeader
   },
   data () {
     return {
-      customVariants: [],
+      activeVariants: [],
       loading: true
     }
   },
   computed: {
     visibleVariants () {
-      return search.getFilteredList(this.customVariants)
+      return search.getFilteredList(this.activeVariants)
     }
   },
   created () {
@@ -67,30 +63,19 @@ export default {
     })
   },
   methods: {
-    async fetchVariants () {
+    fetchVariants () {
       this.loading = true
-      const response = await customVariantApi.fetchCustomVariantsList()
-      if (response.success) {
-        this.customVariants = search.makeFilterable(response.data)
-      }
-      this.loading = false
-    },
-    async resetVariants () {
-      this.loading = true
-      const response = await customVariantApi.resetCustomVariants()
-      if (response.success) {
-        this.customVariants = []
-      }
+      this.activeVariants = search.makeFilterable(routesVariants.getActiveVariants())
       this.loading = false
     },
     searchVariants (searchText) {
       this.loading = true
       if (searchText === '') {
-        this.customVariants.forEach((variant) => {
+        this.activeVariants.forEach((variant) => {
           variant.show = true
         })
       } else {
-        this.customVariants.forEach((variant) => {
+        this.activeVariants.forEach((variant) => {
           variant.show = variant.data.includes(searchText)
         })
       }
@@ -107,7 +92,7 @@ export default {
 
 div.card-body {
   padding: 5px;
-  height: calc((100vh / 2) - 108px) !important;
+  height: calc((100vh / 2) - 100px) !important;
   overflow-y: scroll;
 }
 
