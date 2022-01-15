@@ -6,8 +6,13 @@
       </p>
       <b-collapse :id="`route-${route.id}`" class="mt-2">
         <b-card class="text-dark">
-          <p><span>URL: </span><code>{{ route.url }}</code></p>
-          <p><span>Method: </span><code>{{ route.method }}</code></p>
+          <p class="mb-0">
+            <span>URL: </span><code>{{ route.url }}</code>
+          </p>
+          <hr>
+          <p class="mb-0">
+            <span>Method: </span><code>{{ route.method }}</code>
+          </p>
           <hr>
           <b-button
             v-for="routeVariant in route.variants"
