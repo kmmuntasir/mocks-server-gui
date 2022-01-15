@@ -19,6 +19,7 @@
                   v-model="serverSettings.cors"
                   value="true"
                   unchecked-value="false"
+                  @change="updateDataModifiedFlag"
                 >
                   {{ serverSettings.cors === 'true' ? 'Enabled' : 'Disabled' }}
                 </b-form-checkbox>
@@ -31,6 +32,7 @@
                   v-model="serverSettings.corsPreFlight"
                   value="true"
                   unchecked-value="false"
+                  @change="updateDataModifiedFlag"
                 >
                   {{ serverSettings.corsPreFlight === 'true' ? 'Enabled' : 'Disabled' }}
                 </b-form-checkbox>
@@ -45,6 +47,8 @@
                     v-model="serverSettings.delay"
                     placeholder="Default value is 0"
                     type="number"
+                    @change="updateDataModifiedFlag"
+                    @keyup="updateDataModifiedFlag"
                   />
                 </b-input-group>
               </b-form-group>
@@ -55,7 +59,9 @@
                 <b-input-group prepend="Application Root/">
                   <b-form-input
                     v-model="serverSettings.path"
-                    class="btn-outline-danger"
+                    class="border-danger"
+                    @change="updateDataModifiedFlag"
+                    @keyup="updateDataModifiedFlag"
                   />
                 </b-input-group>
                 <b-alert variant="danger" size="sm" show class="mt-2">
@@ -68,7 +74,7 @@
               </b-form-group>
               <hr>
               <b-form-group class="d-flex flex-row-reverse">
-                <b-button type="submit" variant="primary">
+                <b-button type="submit" variant="primary" :disabled="!dataModified">
                   Save
                 </b-button>
               </b-form-group>
@@ -153,7 +159,8 @@ export default {
       applicationSettings: application.getSettings(),
       serverSettings: settings.readServerSettingsFromMemory(),
       changeSettingsAllowed: false,
-      loading: false
+      loading: false,
+      dataModified: false
     }
   },
   created () {
@@ -166,11 +173,16 @@ export default {
         this.$router.push(Routes.root)
       }
     },
+    updateDataModifiedFlag () {
+      this.dataModified = !settings.compareSettingsWithMemory(this.serverSettings)
+    },
     async updateSettings () {
       this.loading = true
       const response = await serverSettingsApi.updateSettings(this.serverSettings)
       if (response.success) {
         this.$root.$emit(RootEvent.UPDATE_SERVER_SETTINGS)
+        settings.update(this.serverSettings)
+        this.updateDataModifiedFlag()
       }
       this.loading = false
     }

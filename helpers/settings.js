@@ -22,6 +22,20 @@ export default {
     })
     return settings
   },
+  compareSettingsWithMemory (newSettings) {
+    const currentSettings = this.readServerSettingsFromMemory()
+    const keys1 = Object.keys(currentSettings)
+    const keys2 = Object.keys(newSettings)
+    if (keys1.length !== keys2.length) {
+      return false
+    }
+    for (const key of keys1) {
+      if (currentSettings[key] !== newSettings[key]) {
+        return false
+      }
+    }
+    return true
+  },
   getCurrentMock: () => {
     return storage.get('mock')
   },
