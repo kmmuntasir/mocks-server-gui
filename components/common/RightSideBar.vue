@@ -49,13 +49,13 @@
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           <small>CORS Policy</small>
           <b-badge variant="secondary">
-            {{ server.settings.cors }}
+            {{ server.settings.cors === 'true' ? 'Enabled' : 'Disabled' }}
           </b-badge>
         </b-list-group-item>
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           <small>CORS Pre-Flight</small>
           <b-badge variant="secondary">
-            {{ server.settings.corsPreFlight }}
+            {{ server.settings.corsPreFlight === 'true' ? 'Enabled' : 'Disabled' }}
           </b-badge>
         </b-list-group-item>
         <b-list-group-item class="d-flex justify-content-between align-items-center">
@@ -103,6 +103,9 @@ export default {
   mounted () {
     this.$root.$on(RootEvent.UPDATE_MOCK, () => {
       this.server.settings.mock = settings.getCurrentMock()
+    })
+    this.$root.$on(RootEvent.UPDATE_SERVER_SETTINGS, () => {
+      this.fetchServerSettings()
     })
   },
   methods: {

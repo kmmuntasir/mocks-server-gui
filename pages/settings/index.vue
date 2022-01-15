@@ -2,24 +2,79 @@
   <b-container fluid class="p-0">
     <b-row>
       <b-col>
-        <b-card
-          border-variant="dark"
-          header="Mock Server Settings"
-          header-bg-variant="dark"
-          header-text-variant="white"
-          header-class="h5"
-        >
-          <b-form @submit.prevent="updateSettings">
-            <b-form-group label="API Delay" description="Applicable for only the mock APIs.">
-              <b-input-group append="millisecond(s)">
-                <b-form-input
-                  placeholder="Default value is 0"
-                  type="number"
-                />
-              </b-input-group>
-            </b-form-group>
-          </b-form>
-        </b-card>
+        <b-overlay :show="loading">
+          <b-card
+            border-variant="dark"
+            header="Mock Server Settings"
+            header-bg-variant="dark"
+            header-text-variant="white"
+            header-class="h5"
+          >
+            <b-form @submit.prevent="updateSettings">
+              <b-form-group
+                label-cols="5"
+                label="CORS Policy"
+              >
+                <b-form-checkbox
+                  v-model="serverSettings.cors"
+                  value="true"
+                  unchecked-value="false"
+                >
+                  {{ serverSettings.cors === 'true' ? 'Enabled' : 'Disabled' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group
+                label-cols="5"
+                label="CORS Preflight"
+              >
+                <b-form-checkbox
+                  v-model="serverSettings.corsPreFlight"
+                  value="true"
+                  unchecked-value="false"
+                >
+                  {{ serverSettings.corsPreFlight === 'true' ? 'Enabled' : 'Disabled' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group
+                label-cols="5"
+                label="API Delay"
+                description="Applicable for only the mock APIs."
+              >
+                <b-input-group append="millisecond(s)">
+                  <b-form-input
+                    v-model="serverSettings.delay"
+                    placeholder="Default value is 0"
+                    type="number"
+                  />
+                </b-input-group>
+              </b-form-group>
+              <b-form-group
+                label-cols="5"
+                label="Mock Path"
+              >
+                <b-input-group prepend="Application Root/">
+                  <b-form-input
+                    v-model="serverSettings.path"
+                    class="btn-outline-danger"
+                  />
+                </b-input-group>
+                <b-alert variant="danger" size="sm" show class="mt-2">
+                  <p>
+                    Depending on different mock directories set up in the server, you might need to manually apply the
+                    default mock (from the dashboard) after changing the mock path.
+                  </p>
+                  <b>Hint:</b> Normally you don't have to change this value.
+                </b-alert>
+              </b-form-group>
+              <hr>
+              <b-form-group class="d-flex flex-row-reverse">
+                <b-button type="submit" variant="primary">
+                  Save
+                </b-button>
+              </b-form-group>
+            </b-form>
+          </b-card>
+        </b-overlay>
       </b-col>
       <b-col>
         <b-card
@@ -70,7 +125,7 @@
             The <b><em>Base URL</em></b> and <b><em>Admin API Path</em></b> were loaded from the
             <code>~/constants/ApiConstants.js</code> file, and the <b><em>Brand Name</em></b> was loaded from
             <code>~/constants/Locale.js</code> file. If you have changed the values inside the file, you can use the
-            <b><em>Change Application Settings</em></b> button above to update the values.
+            <b><em>Reload Settings From Config</em></b> button above to update the values.
           </b-alert>
         </b-card>
       </b-col>
@@ -83,7 +138,9 @@ import { BIconArrowRightCircle } from 'bootstrap-vue'
 import SettingsMiddleware from '../../middleware/SettingsMiddleware'
 import Routes from '../../constants/Routes'
 import application from '../../helpers/application'
-// import settings from '../../helpers/settings'
+import settings from '../../helpers/settings'
+import serverSettingsApi from '../../network/apis/serverSettingsApi'
+import RootEvent from '../../constants/RootEvent'
 
 export default {
   name: 'SettingsPage',
@@ -94,8 +151,9 @@ export default {
   data () {
     return {
       applicationSettings: application.getSettings(),
-      mockSettings: {},
-      changeSettingsAllowed: false
+      serverSettings: settings.readServerSettingsFromMemory(),
+      changeSettingsAllowed: false,
+      loading: false
     }
   },
   created () {
@@ -108,8 +166,13 @@ export default {
         this.$router.push(Routes.root)
       }
     },
-    updateSettings () {
-
+    async updateSettings () {
+      this.loading = true
+      const response = await serverSettingsApi.updateSettings(this.serverSettings)
+      if (response.success) {
+        this.$root.$emit(RootEvent.UPDATE_SERVER_SETTINGS)
+      }
+      this.loading = false
     }
   }
 }
@@ -119,8 +182,5 @@ export default {
   .cardTitleBarButton {
     font-size: 0.8rem;
     padding: 0.10rem 0.20rem;
-  }
-  .td-sm {
-    width: 50px !important;
   }
 </style>
