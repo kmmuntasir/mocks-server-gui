@@ -57,7 +57,6 @@
 import Routes from '../constants/Routes'
 import application from '../helpers/application'
 import Locale from '../constants/Locale'
-import ApiConstants from '../constants/ApiConstants'
 
 export default {
   name: 'DefaultPage',
@@ -93,11 +92,7 @@ export default {
         this.settingsLoadedFromFile = false
         this.proceed()
       } else {
-        this.setup = {
-          brandName: Locale.BRAND_NAME,
-          baseUrl: ApiConstants.BASE_URL,
-          adminPath: ApiConstants.ADMIN_PATH
-        }
+        this.setup = application.readSettingsFromConfigFile()
         if (this.setup.baseUrl && this.setup.adminPath) {
           this.settingsLoadedFromFile = true
           this.proceed()
@@ -107,6 +102,7 @@ export default {
       }
     },
     async proceed () {
+      this.setup.loadedFromFile = this.settingsLoadedFromFile
       if (await application.validateSettings(this.setup)) {
         await this.$router.push(Routes.dashboard)
       } else if (this.settingsLoadedFromFile) {

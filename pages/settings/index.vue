@@ -19,7 +19,9 @@
             title="Clear All"
             @click="goToAppSettings"
           >
-            <span>Change Application Settings</span>
+            <span>
+              {{ changeSettingsAllowed ? 'Change Application Settings' : 'Reload Settings From Config' }}
+            </span>
             <BIconArrowRightCircle />
           </b-button>
         </div>
@@ -65,7 +67,8 @@ export default {
   middleware: [SettingsMiddleware],
   data () {
     return {
-      rows: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      rows: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      changeSettingsAllowed: !application.getSettings().loadedFromFile
     }
   },
   methods: {

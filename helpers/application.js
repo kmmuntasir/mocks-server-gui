@@ -1,4 +1,6 @@
 import serverSettingsApi from '../network/apis/serverSettingsApi'
+import ApiConstants from '../constants/ApiConstants'
+import Locale from '../constants/Locale'
 import storage from './storage'
 import settings from './settings'
 
@@ -12,6 +14,14 @@ export default {
   removeSettings: () => {
     storage.remove('application')
     settings.clear()
+  },
+  readSettingsFromConfigFile: () => {
+    return {
+      brandName: Locale.BRAND_NAME,
+      baseUrl: ApiConstants.BASE_URL,
+      adminPath: ApiConstants.ADMIN_PATH,
+      loadedFromFile: true
+    }
   },
   async validateSettings (settings) {
     if (!settings) {
