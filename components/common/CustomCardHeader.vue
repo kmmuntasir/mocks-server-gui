@@ -31,7 +31,7 @@
         :title="customButton.title"
         @click="customButtonFunction"
       >
-        <BIconXCircleFill />
+        <component :is="customButton.icon" />
       </b-button>
       <b-input
         v-if="search"

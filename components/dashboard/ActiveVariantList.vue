@@ -11,8 +11,9 @@
           title="Active Variants"
           :search="true"
           :custom-button="{
-            variant: 'info',
-            title: 'Save Active Variants as a Custom Mock'
+            variant: 'primary',
+            title: 'Save Active Variants as a Custom Mock',
+            icon: icon,
           }"
           @search="searchVariants"
           @customButtonClicked="invokeAddCustomMockModal"
@@ -49,10 +50,12 @@
         this custom mock.
       </b-alert>
     </b-modal>
+    <BIconFolderPlus class="d-none" />
   </b-overlay>
 </template>
 
 <script>
+import { BIconFolderPlus } from 'bootstrap-vue'
 import search from '../../helpers/search'
 import routesVariants from '../../helpers/routesVariants'
 import CustomCardHeader from '../common/CustomCardHeader'
@@ -62,13 +65,15 @@ import customMock from '../../helpers/customMock'
 export default {
   name: 'ActiveVariantList',
   components: {
-    CustomCardHeader
+    CustomCardHeader,
+    BIconFolderPlus
   },
   data () {
     return {
       activeVariants: [],
       loading: true,
-      customMockName: ''
+      customMockName: '',
+      icon: BIconFolderPlus
     }
   },
   computed: {
