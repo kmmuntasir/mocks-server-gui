@@ -15,7 +15,7 @@
             title: 'Save Active Variants as a Custom Mock'
           }"
           @search="searchVariants"
-          @customButtonClicked="customButtonClicked"
+          @customButtonClicked="invokeAddCustomMockModal"
         />
       </template>
       <b-button
@@ -31,6 +31,24 @@
         </p>
       </b-button>
     </b-card>
+    <b-modal
+      id="addCustomMockModal"
+      title="Add Custom Mock"
+      :ok-disabled="customMockName===''"
+      @hidden="customMockName=''"
+      @ok="addCustomMock"
+    >
+      <b-form-input
+        v-model="customMockName"
+        placeholder="Custom Mock Name"
+        required
+      />
+      <b-alert variant="danger" show class="mt-2">
+        Please note that this custom mock will be saved only in your browser memory. It will not be saved in any
+        database or file. So clearing your browser cache, or changing/ resetting the application settings will remove
+        this custom mock.
+      </b-alert>
+    </b-modal>
   </b-overlay>
 </template>
 
@@ -39,6 +57,7 @@ import search from '../../helpers/search'
 import routesVariants from '../../helpers/routesVariants'
 import CustomCardHeader from '../common/CustomCardHeader'
 import RootEvent from '../../constants/RootEvent'
+import customMock from '../../helpers/customMock'
 
 export default {
   name: 'ActiveVariantList',
@@ -48,7 +67,8 @@ export default {
   data () {
     return {
       activeVariants: [],
-      loading: true
+      loading: true,
+      customMockName: ''
     }
   },
   computed: {
@@ -86,8 +106,18 @@ export default {
       }
       this.loading = false
     },
-    customButtonClicked () {
-
+    invokeAddCustomMockModal () {
+      this.$bvModal.show('addCustomMockModal')
+    },
+    addCustomMock () {
+      if (this.customMockName) {
+        const mock = {
+          id: this.customMockName,
+          routesVariants: this.visibleVariants
+        }
+        customMock.add(mock)
+        this.$root.$emit(RootEvent.APPLY_CUSTOM_MOCK, mock)
+      }
     },
     handleLoader (loading) {
       this.loading = loading

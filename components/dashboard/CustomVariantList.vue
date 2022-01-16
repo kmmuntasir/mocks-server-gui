@@ -9,7 +9,7 @@
       <template #header>
         <CustomCardHeader
           title="Custom Variants"
-          :reset="true"
+          :reset="customVariants.length > 0"
           :refresh="true"
           :search="true"
           @reset="resetVariants"

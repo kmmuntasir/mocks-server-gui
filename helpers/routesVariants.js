@@ -25,8 +25,8 @@ export default {
     this.setActiveVariants(activeVariants)
   },
   applyMultipleVariants (variantIds) {
-    for (const variantId in variantIds) {
+    variantIds.forEach((variantId) => {
       this.apply(variantId)
-    }
+    })
   }
 }

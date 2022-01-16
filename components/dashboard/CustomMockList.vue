@@ -16,7 +16,7 @@
       <SingleCustomMockCard
         v-for="mock in visibleMocks"
         :key="mock.id"
-        :mock="storeMockAppliedRoutes(mock)"
+        :mock="mock"
         :active="mock.id === currentMock"
         @loading="handleLoader"
       />
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import routesVariants from '../../helpers/routesVariants'
 import RootEvent from '../../constants/RootEvent'
 import search from '../../helpers/search'
 import customMock from '../../helpers/customMock'
@@ -57,19 +56,20 @@ export default {
     this.$root.$on(RootEvent.UPDATE_MOCK, (mock) => {
       this.currentMock = mock.id
     })
+    this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, (mock) => {
+      this.currentMock = mock.id
+      this.fetchMocks()
+    })
+    this.$root.$on(RootEvent.DELETE_CUSTOM_MOCK, () => {
+      this.currentMock = null
+      this.fetchMocks()
+    })
   },
   methods: {
     fetchMocks () {
       this.loading = true
-      this.mocks = customMock.getAll()
+      this.mocks = search.makeFilterable(customMock.getAll())
       this.loading = false
-    },
-    storeMockAppliedRoutes (mock) {
-      if (mock.id === this.currentMock) {
-        routesVariants.applyMultipleVariants(mock.appliedRoutesVariants)
-        this.$root.$emit(RootEvent.APPLY_VARIANT)
-      }
-      return mock
     },
     searchMocks (searchText) {
       this.loading = true

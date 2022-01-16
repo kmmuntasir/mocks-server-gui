@@ -14,12 +14,22 @@
             <b-button
               :variant="`${active ? 'dark' : 'success'}`"
               size="sm"
-              class="ml-auto"
+              class="mr-auto"
               :disabled="active"
               @click="applyCustomMock(mock)"
             >
               <BIconCheck2 v-if="!active" />
               <span>{{ active ? 'Applied' : 'Apply' }}</span>
+            </b-button>
+            <b-button
+              variant="danger"
+              size="sm"
+              class="ml-auto"
+              :disabled="active"
+              @click="deleteCustomMock(mock)"
+            >
+              <BIconTrash />
+              <span>Delete</span>
             </b-button>
             <div class="clearfix" />
           </b-alert>
@@ -46,14 +56,16 @@
 </template>
 
 <script>
-import { BIconCheck2 } from 'bootstrap-vue'
+import { BIconCheck2, BIconTrash } from 'bootstrap-vue'
 import routesVariants from '../../helpers/routesVariants'
 import RootEvent from '../../constants/RootEvent'
+import customMock from '../../helpers/customMock'
 
 export default {
   name: 'SingleCustomMockCard',
   components: {
-    BIconCheck2
+    BIconCheck2,
+    BIconTrash
   },
   props: {
     mock: {
@@ -73,10 +85,18 @@ export default {
   methods: {
     applyCustomMock (mock) {
       this.$emit('loading', true)
-      routesVariants.applyMultipleVariants(mock.appliedRoutesVariants)
-      this.$root.$emit(RootEvent.UPDATE_MOCK, mock)
+      customMock.apply(mock)
       this.$root.$emit(RootEvent.APPLY_VARIANT, mock)
+      this.$root.$emit(RootEvent.APPLY_CUSTOM_MOCK, mock)
       this.$emit('loading', false)
+    },
+    deleteCustomMock (mock) {
+      if (confirm('Are you sure?')) {
+        this.$emit('loading', true)
+        customMock.delete(mock)
+        this.$root.$emit(RootEvent.DELETE_CUSTOM_MOCK)
+        this.$emit('loading', false)
+      }
     }
   }
 }
