@@ -16,13 +16,13 @@
       hide-backdrop
       content-class="shadow"
       hide-header
-      :footer-bg-variant="notificationVariant"
-      :body-bg-variant="notificationVariant"
-      :body-text-variant="notificationVariant === 'light' || notificationVariant === 'warning' ? 'dark' : 'white'"
+      :footer-bg-variant="notification.variant"
+      :body-bg-variant="notification.variant"
+      :body-text-variant="notification.variant === 'light' || notification.variant === 'warning' ? 'dark' : 'white'"
     >
       <!-- eslint-disable vue/no-v-html -->
-      <h5>{{ notificationTitle }}</h5>
-      <div v-html="notificationMessage" />
+      <h5>{{ notification.title }}</h5>
+      <div v-html="notification.message" />
       <!--eslint-enable-->
       <template #modal-footer="{ ok }">
         <b-button class="close" size="sm" @click="ok()">
@@ -36,8 +36,8 @@
 <script>
 import AppHeader from '../components/common/AppHeader'
 import RightSideBar from '../components/common/RightSideBar'
-import Locale from '../constants/Locale'
 import RootEvent from '../constants/RootEvent'
+import application from '../helpers/application'
 
 export default {
   name: 'DefaultLayout',
@@ -47,14 +47,17 @@ export default {
   },
   data () {
     return {
-      notificationVariant: 'info',
-      notificationTitle: 'Notification',
-      notificationMessage: 'Some Message'
+      notification: {
+        title: 'info',
+        message: 'Notification',
+        variant: 'Some Message'
+      },
+      appSettings: application.getSettings()
     }
   },
   head () {
     return {
-      title: Locale.BRAND_NAME
+      title: this.appSettings.brandName
     }
   },
   mounted () {
@@ -64,9 +67,9 @@ export default {
   },
   methods: {
     showNotification (notification) {
-      this.notificationTitle = notification.title
-      this.notificationMessage = notification.message
-      this.notificationVariant = notification.variant
+      this.notification.title = notification.title
+      this.notification.message = notification.message
+      this.notification.variant = notification.variant
       this.$bvModal.show('notificationModal')
       setTimeout(() => {
         this.$bvModal.hide('notificationModal')
