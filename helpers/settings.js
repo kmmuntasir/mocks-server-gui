@@ -57,7 +57,8 @@ export default {
       'adminApiPath',
       'cli',
       'activeVariants',
-      'customMocks'
+      'customMocks',
+      'activeCustomMockId'
     ]
     settingsKeyList.forEach((key) => {
       storage.remove(key)

@@ -5,7 +5,7 @@ export default {
     storage.setObject('activeVariants', variants)
   },
   getActiveVariants: () => {
-    return storage.getObject('activeVariants')
+    return storage.getObject('activeVariants') ?? []
   },
   getRouteAndVariantFromRouteId (routeId) {
     const routeAndVariant = routeId.split(':')
