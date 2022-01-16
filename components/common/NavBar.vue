@@ -14,6 +14,10 @@
           <small><BIconEmojiSunglassesFill /></small>
           <span>Misc.</span>
         </template>
+        <b-dropdown-item :to="Routes.doc">
+          <small><BIconJournalText /></small>
+          <span>Documentation</span>
+        </b-dropdown-item>
         <b-dropdown-item :to="Routes.about">
           <small><BIconJournalText /></small>
           <span>About Mocks-Server-GUI</span>

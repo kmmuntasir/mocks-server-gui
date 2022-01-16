@@ -3,6 +3,5 @@ export default {
   dashboard: '/dashboard',
   about: '/about',
   settings: '/settings',
-  login: '/login',
-  profile: '/profile'
+  doc: '/documentation'
 }
