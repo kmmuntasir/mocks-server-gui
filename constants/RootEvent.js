@@ -1,4 +1,5 @@
 export default {
+  INVOKE_NOTIFICATION: 'invokeNotification',
   UPDATE_MOCK: 'updateMock',
   APPLY_VARIANT: 'applyVariant',
   UPDATE_SERVER_SETTINGS: 'updateServerSettings',

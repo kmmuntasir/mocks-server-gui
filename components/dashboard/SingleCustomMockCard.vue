@@ -60,6 +60,7 @@ import { BIconCheck2, BIconTrash } from 'bootstrap-vue'
 import routesVariants from '../../helpers/routesVariants'
 import RootEvent from '../../constants/RootEvent'
 import customMock from '../../helpers/customMock'
+import customVariantApi from '../../network/apis/customVariantApi'
 
 export default {
   name: 'SingleCustomMockCard',
@@ -83,11 +84,28 @@ export default {
     }
   },
   methods: {
-    applyCustomMock (mock) {
+    async applyCustomMock (mock) {
       this.$emit('loading', true)
-      customMock.apply(mock)
+      // ToDo: Iterate through all mock routes and call api to apply mock
+      let success = true
+      for (const route of mock.routesVariants) {
+        const response = await customVariantApi.applyCustomVariant(route)
+        if (!response.success) {
+          success = false
+          break
+        }
+      }
+      if (!success) {
+        this.$root.$emit(RootEvent.INVOKE_NOTIFICATION, {
+          title: 'Custom Mock Apply Error!',
+          message: 'Some routes could not be applied',
+          variant: 'danger'
+        })
+      } else {
+        customMock.apply(mock)
+        this.$root.$emit(RootEvent.APPLY_CUSTOM_MOCK, mock)
+      }
       this.$root.$emit(RootEvent.APPLY_VARIANT, mock)
-      this.$root.$emit(RootEvent.APPLY_CUSTOM_MOCK, mock)
       this.$emit('loading', false)
     },
     deleteCustomMock (mock) {
