@@ -43,6 +43,7 @@
         v-model="customMockName"
         placeholder="Custom Mock Name"
         required
+        @keyup.enter="addCustomMock"
       />
       <b-alert variant="danger" show class="mt-2">
         Please note that this custom mock will be saved only in your browser memory. It will not be saved in any
@@ -122,6 +123,7 @@ export default {
         }
         customMock.add(mock)
         this.$root.$emit(RootEvent.APPLY_CUSTOM_MOCK, mock)
+        this.$bvModal.hide('addCustomMockModal')
       }
     },
     handleLoader (loading) {
