@@ -86,7 +86,6 @@ export default {
   methods: {
     async applyCustomMock (mock) {
       this.$emit('loading', true)
-      // ToDo: Iterate through all mock routes and call api to apply mock
       let success = true
       for (const route of mock.routesVariants) {
         const response = await customVariantApi.applyCustomVariant(route)
