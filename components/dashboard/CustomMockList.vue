@@ -57,12 +57,16 @@ export default {
       this.currentMock = mock.id
     })
     this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, (mock) => {
-      this.currentMock = mock.id
-      this.fetchMocks()
+      this.currentMock = mock?.id
     })
     this.$root.$on(RootEvent.DELETE_CUSTOM_MOCK, () => {
       this.currentMock = null
-      this.fetchMocks()
+    })
+    this.$root.$on(RootEvent.RESET_CUSTOM_VARIANTS, () => {
+      this.currentMock = null
+    })
+    this.$root.$on(RootEvent.APPLY_VARIANT, () => {
+      this.currentMock = null
     })
   },
   methods: {

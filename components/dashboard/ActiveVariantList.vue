@@ -92,6 +92,9 @@ export default {
     this.$root.$on(RootEvent.APPLY_VARIANT, () => {
       this.fetchVariants()
     })
+    this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, () => {
+      this.fetchVariants()
+    })
   },
   methods: {
     fetchVariants () {

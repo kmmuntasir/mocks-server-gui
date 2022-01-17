@@ -65,6 +65,9 @@ export default {
     this.$root.$on(RootEvent.APPLY_VARIANT, () => {
       this.fetchVariants()
     })
+    this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, () => {
+      this.fetchVariants()
+    })
   },
   methods: {
     async fetchVariants () {
@@ -81,6 +84,7 @@ export default {
       if (response.success) {
         this.customVariants = []
       }
+      this.$root.$emit(RootEvent.RESET_CUSTOM_VARIANTS)
       this.loading = false
     },
     searchVariants (searchText) {

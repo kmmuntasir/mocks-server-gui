@@ -62,15 +62,23 @@ export default {
   data () {
     return {
       getRouteAndVariantFromRouteId: routesVariants.getRouteAndVariantFromRouteId,
-      activeVariants: routesVariants.getActiveVariants() ?? []
+      activeVariants: routesVariants.getActiveVariants()
     }
   },
   mounted () {
     this.$root.$on(RootEvent.APPLY_VARIANT, () => {
-      this.activeVariants = routesVariants.getActiveVariants() ?? []
+      this.fetchActiveVariants()
+    })
+    this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, () => {
+      this.$emit('loading', true)
+      this.fetchActiveVariants()
+      this.$emit('loading', false)
     })
   },
   methods: {
+    fetchActiveVariants () {
+      this.activeVariants = routesVariants.getActiveVariants()
+    },
     async applyVariant (routeVariant) {
       this.$emit('loading', true)
       const response = await customVariantApi.applyCustomVariant(routeVariant)

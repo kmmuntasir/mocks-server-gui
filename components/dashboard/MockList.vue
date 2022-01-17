@@ -58,6 +58,15 @@ export default {
     this.$root.$on(RootEvent.UPDATE_MOCK, (mock) => {
       this.currentMock = mock.id
     })
+    this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, (mock) => {
+      this.currentMock = mock.id
+    })
+    this.$root.$on(RootEvent.APPLY_VARIANT, () => {
+      this.currentMock = settings.getCurrentMock()
+    })
+    this.$root.$on(RootEvent.RESET_CUSTOM_VARIANTS, () => {
+      this.currentMock = settings.getCurrentMock()
+    })
   },
   methods: {
     async fetchMocks () {

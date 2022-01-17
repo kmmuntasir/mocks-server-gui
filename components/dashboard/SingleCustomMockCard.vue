@@ -100,11 +100,11 @@ export default {
           message: 'Some routes could not be applied',
           variant: 'danger'
         })
+        this.$root.$emit(RootEvent.APPLY_CUSTOM_MOCK, null)
       } else {
         customMock.apply(mock)
         this.$root.$emit(RootEvent.APPLY_CUSTOM_MOCK, mock)
       }
-      this.$root.$emit(RootEvent.APPLY_VARIANT, mock)
       this.$emit('loading', false)
     },
     deleteCustomMock (mock) {
