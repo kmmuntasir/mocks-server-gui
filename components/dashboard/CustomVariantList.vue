@@ -10,24 +10,25 @@
         <CustomCardHeader
           title="Custom Variants"
           :reset="customVariants.length > 0"
-          :refresh="true"
           :search="true"
           @reset="resetVariants"
-          @refresh="fetchVariants"
           @search="searchVariants"
         />
       </template>
       <b-button
         v-for="customVariant in visibleVariants"
         :key="customVariant"
-        class="mb-1 mt-0 text-left p-0"
+        class="text-left d-flex"
         variant="dark"
         block
         disabled
       >
-        <p class="mb-0 p-2">
-          {{ customVariant }}
+        <p class="alert-content-p mb-0">
+          {{ getRouteAndVariantFromRouteId(customVariant).route }}
         </p>
+        <b-button variant="warning" class="ml-auto" size="sm">
+          {{ getRouteAndVariantFromRouteId(customVariant).variant }}
+        </b-button>
       </b-button>
     </b-card>
   </b-overlay>
@@ -48,7 +49,8 @@ export default {
   data () {
     return {
       customVariants: [],
-      loading: true
+      loading: true,
+      getRouteAndVariantFromRouteId: routesVariants.getRouteAndVariantFromRouteId
     }
   },
   computed: {

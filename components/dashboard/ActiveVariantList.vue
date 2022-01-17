@@ -22,14 +22,17 @@
       <b-button
         v-for="activeVariant in visibleVariants"
         :key="activeVariant"
-        class="mb-1 mt-0 text-left p-0"
+        class="text-left d-flex"
         variant="dark"
         block
         disabled
       >
-        <p class="mb-0 p-2">
-          {{ activeVariant }}
+        <p class="alert-content-p mb-0">
+          {{ getRouteAndVariantFromRouteId(activeVariant).route }}
         </p>
+        <b-button variant="primary" class="ml-auto" size="sm">
+          {{ getRouteAndVariantFromRouteId(activeVariant).variant }}
+        </b-button>
       </b-button>
     </b-card>
     <b-modal
@@ -75,7 +78,8 @@ export default {
       customVariants: [],
       loading: true,
       customMockName: '',
-      icon: BIconFolderPlus
+      icon: BIconFolderPlus,
+      getRouteAndVariantFromRouteId: routesVariants.getRouteAndVariantFromRouteId
     }
   },
   computed: {
