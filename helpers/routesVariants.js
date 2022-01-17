@@ -1,6 +1,12 @@
 import storage from './storage'
 
 export default {
+  setCustomVariants: (variants) => {
+    storage.setObject('customVariants', variants)
+  },
+  getCustomVariants: () => {
+    return storage.getObject('customVariants') ?? []
+  },
   setActiveVariants: (variants) => {
     storage.setObject('activeVariants', variants)
   },

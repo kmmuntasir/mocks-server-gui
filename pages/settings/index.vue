@@ -55,7 +55,7 @@
               <hr>
               <b-form-group
                 label-cols="5"
-                label="Mock Path"
+                label="Mock Directory Path"
               >
                 <b-input-group>
                   <template #prepend>
@@ -72,8 +72,8 @@
                 </b-input-group>
                 <b-alert variant="danger" size="sm" show class="mt-2">
                   <p>
-                    Depending on different mock directories set up in the server, you might need to manually apply the
-                    default mock (from the dashboard) after changing the mock path.
+                    Depending on different mock directories set up in the server, you might need to manually apply
+                    the default mock (from the dashboard) after changing the mock path.
                   </p>
                   <b>Hint:</b> Normally you don't have to change this value.
                 </b-alert>
@@ -134,10 +134,9 @@
           <b-alert v-if="applicationSettings.loadedFromFile" show class="mt-2">
             <b>Note: </b>
             <hr class="mt-2 mb-2">
-            The <b><em>Base URL</em></b> and <b><em>Admin API Path</em></b> were loaded from the
-            <code>~/constants/ApiConstants.js</code> file, and the <b><em>Brand Name</em></b> was loaded from
-            <code>~/constants/Locale.js</code> file. If you have changed the values inside the file, you can use the
-            <b><em>Reload Settings From Config</em></b> button above to update the values.
+            These settings were loaded from the <code>~/constants/config.js</code> file. If you have changed the
+            values inside the file, you can use the <b><em>Reload Settings From Config</em></b> button above to
+            update the values.
           </b-alert>
         </b-card>
       </b-col>

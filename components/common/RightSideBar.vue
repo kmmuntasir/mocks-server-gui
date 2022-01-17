@@ -2,7 +2,7 @@
   <b-overlay :show="loading">
     <b-card
       border-variant="dark"
-      header="Server Info"
+      header="Server Status"
       header-bg-variant="dark"
       header-text-variant="white"
       header-class="h5 text-right"
@@ -115,7 +115,7 @@ export default {
       if (response.success) {
         this.server.settings = response.data
         settings.update(this.server.settings)
-        this.$root.$emit(RootEvent.UPDATE_MOCK, { id: this.server.settings.mock })
+        this.$root.$emit(RootEvent.SELECT_MOCK_ON_STARTUP, { id: this.server.settings.mock })
       }
       response = await serverSettingsApi.fetchServerVersion()
       if (response.success) {

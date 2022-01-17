@@ -10,7 +10,7 @@
         <CustomCardHeader
           title="Active Variants"
           :search="true"
-          :custom-button="{
+          :custom-button=" customVariants.length === 0 ? null : {
             variant: 'primary',
             title: 'Save Active Variants as a Custom Mock',
             icon: icon,
@@ -72,6 +72,7 @@ export default {
   data () {
     return {
       activeVariants: [],
+      customVariants: [],
       loading: true,
       customMockName: '',
       icon: BIconFolderPlus
@@ -92,6 +93,12 @@ export default {
     this.$root.$on(RootEvent.APPLY_VARIANT, () => {
       this.fetchVariants()
     })
+    this.$root.$on(RootEvent.FETCHED_CUSTOM_VARIANTS, () => {
+      this.fetchVariants()
+    })
+    this.$root.$on(RootEvent.RESET_CUSTOM_VARIANTS, () => {
+      this.fetchVariants()
+    })
     this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, () => {
       this.fetchVariants()
     })
@@ -100,6 +107,12 @@ export default {
     fetchVariants () {
       this.loading = true
       this.activeVariants = search.makeFilterable(routesVariants.getActiveVariants())
+      this.fetchCustomVariants()
+      this.loading = false
+    },
+    fetchCustomVariants () {
+      this.loading = true
+      this.customVariants = search.makeFilterable(routesVariants.getCustomVariants())
       this.loading = false
     },
     searchVariants (searchText) {

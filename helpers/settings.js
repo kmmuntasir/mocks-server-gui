@@ -58,7 +58,8 @@ export default {
       'cli',
       'activeVariants',
       'customMocks',
-      'activeCustomMockId'
+      'activeCustomMockId',
+      'customVariants'
     ]
     settingsKeyList.forEach((key) => {
       storage.remove(key)

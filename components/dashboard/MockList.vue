@@ -55,17 +55,24 @@ export default {
     this.fetchMocks()
   },
   mounted () {
+    this.$root.$on(RootEvent.SELECT_MOCK_ON_STARTUP, (mock) => {
+      this.currentMock = mock.id
+    })
     this.$root.$on(RootEvent.UPDATE_MOCK, (mock) => {
       this.currentMock = mock.id
+      this.fetchMocks()
+      routesVariants.applyMultipleVariants(mock.appliedRoutesVariants)
     })
     this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, (mock) => {
       this.currentMock = mock.id
+      this.fetchMocks()
     })
     this.$root.$on(RootEvent.APPLY_VARIANT, () => {
       this.currentMock = settings.getCurrentMock()
     })
     this.$root.$on(RootEvent.RESET_CUSTOM_VARIANTS, () => {
       this.currentMock = settings.getCurrentMock()
+      this.fetchMocks()
     })
   },
   methods: {
@@ -79,7 +86,7 @@ export default {
     },
     storeMockAppliedRoutes (mock) {
       if (mock.id === this.currentMock) {
-        routesVariants.setActiveVariants(mock.appliedRoutesVariants)
+        routesVariants.applyMultipleVariants(mock.appliedRoutesVariants)
         this.$root.$emit(RootEvent.APPLY_VARIANT)
       }
       return mock

@@ -1,5 +1,4 @@
 export default {
-  BRAND_NAME: 'Mocks-Server-GUI',
   TOAST_TITLE: 'Notification!',
   TOAST_TEXT: 'Notification Text',
   CONNECTION_TIMED_OUT: 'Connection Timed Out!',

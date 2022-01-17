@@ -1,6 +1,5 @@
 import serverSettingsApi from '../network/apis/serverSettingsApi'
-import ApiConstants from '../constants/ApiConstants'
-import Locale from '../constants/Locale'
+import config from '../constants/config'
 import storage from './storage'
 import settings from './settings'
 
@@ -17,9 +16,9 @@ export default {
   },
   readSettingsFromConfigFile: () => {
     return {
-      brandName: Locale.BRAND_NAME,
-      baseUrl: ApiConstants.BASE_URL,
-      adminPath: ApiConstants.ADMIN_PATH,
+      brandName: config.BRAND_NAME,
+      baseUrl: config.BASE_URL,
+      adminPath: config.ADMIN_PATH,
       loadedFromFile: true
     }
   },

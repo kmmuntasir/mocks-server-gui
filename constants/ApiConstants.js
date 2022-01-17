@@ -1,6 +1,4 @@
 export default {
-  BASE_URL: '',
-  ADMIN_PATH: '',
   POST: 'POST',
   GET: 'GET',
   PUT: 'PUT',

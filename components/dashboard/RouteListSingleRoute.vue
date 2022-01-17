@@ -70,14 +70,17 @@ export default {
       this.fetchActiveVariants()
     })
     this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, () => {
-      this.$emit('loading', true)
       this.fetchActiveVariants()
-      this.$emit('loading', false)
+    })
+    this.$root.$on(RootEvent.RESET_CUSTOM_VARIANTS, () => {
+      this.fetchActiveVariants()
     })
   },
   methods: {
     fetchActiveVariants () {
+      this.$emit('loading', true)
       this.activeVariants = routesVariants.getActiveVariants()
+      this.$emit('loading', false)
     },
     async applyVariant (routeVariant) {
       this.$emit('loading', true)

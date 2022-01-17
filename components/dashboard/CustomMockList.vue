@@ -55,18 +55,22 @@ export default {
   mounted () {
     this.$root.$on(RootEvent.UPDATE_MOCK, (mock) => {
       this.currentMock = mock.id
+      this.fetchMocks()
     })
     this.$root.$on(RootEvent.APPLY_CUSTOM_MOCK, (mock) => {
       this.currentMock = mock?.id
+      this.fetchMocks()
     })
     this.$root.$on(RootEvent.DELETE_CUSTOM_MOCK, () => {
       this.currentMock = null
+      this.fetchMocks()
     })
     this.$root.$on(RootEvent.RESET_CUSTOM_VARIANTS, () => {
       this.currentMock = null
     })
     this.$root.$on(RootEvent.APPLY_VARIANT, () => {
       this.currentMock = null
+      this.fetchMocks()
     })
   },
   methods: {

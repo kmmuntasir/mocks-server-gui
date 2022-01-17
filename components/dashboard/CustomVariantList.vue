@@ -38,6 +38,7 @@ import customVariantApi from '../../network/apis/customVariantApi'
 import search from '../../helpers/search'
 import CustomCardHeader from '../common/CustomCardHeader'
 import RootEvent from '../../constants/RootEvent'
+import routesVariants from '../../helpers/routesVariants'
 
 export default {
   name: 'CustomVariantList',
@@ -55,9 +56,6 @@ export default {
       return search.getFilteredList(this.customVariants)
     }
   },
-  created () {
-    this.fetchVariants()
-  },
   mounted () {
     this.$root.$on(RootEvent.UPDATE_MOCK, () => {
       this.fetchVariants()
@@ -74,6 +72,9 @@ export default {
       this.loading = true
       const response = await customVariantApi.fetchCustomVariantsList()
       if (response.success) {
+        routesVariants.applyMultipleVariants(response.data)
+        routesVariants.setCustomVariants(response.data)
+        this.$root.$emit(RootEvent.FETCHED_CUSTOM_VARIANTS)
         this.customVariants = search.makeFilterable(response.data)
       }
       this.loading = false
