@@ -52,11 +52,17 @@
                   />
                 </b-input-group>
               </b-form-group>
+              <hr>
               <b-form-group
                 label-cols="5"
                 label="Mock Path"
               >
-                <b-input-group prepend="Application Root/">
+                <b-input-group>
+                  <template #prepend>
+                    <b-input-group-text class="bg-danger border-danger">
+                      <strong class="text-white">Application Root/</strong>
+                    </b-input-group-text>
+                  </template>
                   <b-form-input
                     v-model="serverSettings.path"
                     class="border-danger"
