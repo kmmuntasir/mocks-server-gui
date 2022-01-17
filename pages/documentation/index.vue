@@ -6,6 +6,7 @@
     header-text-variant="white"
     header-class="h4"
   >
+    <!-- eslint-disable vue/singleline-html-element-content-newline -->
     <div class="text-to-read">
       <b-alert variant="info" show class="text-center">
         <b>Disclaimer: </b> You should get familiarized with the
@@ -24,51 +25,62 @@
         <li>
           <b>Control Mocks Server Settings: </b> You can control the <b>CORS Policy</b>, <b>API Delay</b>, or even
           <b>Mock Directory Path</b> from the settings page, while the server is running. The settings will be applied
-          immediately and you can see them in the <b>Server Status</b> sidebar.<br>
+          immediately and you can see them in the <b-button variant="dark" size="sm">Server Status</b-button> sidebar.
+          <br>
           <span class="text-danger">
             <b>Note: </b> Change the <b>Mock Directory Path</b> ***ONLY IF*** you have multiple sets of mocks set up
             in your mock server in multiple directories.
           </span>
         </li>
         <li>
-          <b>Apply Mocks: </b> In the Dashboard, you should see the <b>Available Mocks</b> section. You can click to
-          expand each mocks and see all the routes variants for that mock. You can click the <b>Apply</b> button to
-          apply that mock immediately.<br>
+          <b>Apply Mocks: </b> In the Dashboard, you should see the
+          <b-button variant="dark" size="sm">Available Mocks</b-button> section. You can click to expand each mocks
+          and see all the routes variants for that mock. You can click the <b>Apply</b> button to apply that mock
+          immediately.<br>
           <b>Note: </b> All the currently configured custom route-variants will be removed when
           you apply a mock.
         </li>
         <li>
-          <b>Apply Routes Variants: </b> In the Dashboard, you should see the <b>Available Routes</b> section. You
-          can click to expand each routes and see all the routes variants for that route. You can click any routes
-          variant, which is not active, to activate it. When activated a route variant, the previously active variant
-          of that route will be removed from the custom variants list, if present.
+          <b>Apply Routes Variants: </b> In the Dashboard, you should see the
+          <b-button variant="dark" size="sm">Available Routes</b-button> section. You can click to expand each routes
+          and see all the routes variants for that route. You can click any routes variant, which is not active, to
+          activate it. When activated a route variant, the previously active variant of that route will be removed
+          from the custom variants list, if present.
         </li>
         <li>
-          <b>Clear Custom Variants: </b> At any moment, you can use the Red <b>Clear All</b> button in the header of
-          the <b>Custom Variants</b> section in the Dashboard to clear all the custom route variants. This will make
-          the server return to the default state of the currently active mock. Please note that this button will not
-          be visible when the custom variants list is empty.
+          <b>Clear Custom Variants: </b> At any moment, you can use the Red <u><i>Clear All</i></u> button
+          (<b-button variant="danger" size="sm"><BIconXCircleFill /></b-button>) in the header of the
+          <b-button variant="dark" size="sm">Custom Variants</b-button> section in the Dashboard to clear all the
+          custom route variants. This will make the server return to the default state of the currently active mock.
+          Please note that this button will not be visible when the custom variants list is empty.
         </li>
         <li>
-          <b>Save/Delete Custom Mocks: </b> In the Dashboard, you should see the <b>Active Variants</b> section. It
-          contains all the routes variants that are currently active in the mock server. Using the Blue
-          <b>Save Custom Mock</b> button, you can save this current combination of route variants as a custom mock,
-          which you can apply later. Please note that this button will not be visible when the custom variants list
-          is empty.
-          <br>From the <b>Custom Mocks</b> section in the Dashboard, you can expand any saved custom mock, view the
-          routes variants list, apply it by using the Apply button. And if you want, you can use the delete button to
-          delete the custom mock.
+          <b>Save/Delete Custom Mocks: </b> In the Dashboard, you should see the
+          <b-button variant="dark" size="sm">Active Variants</b-button> section. It contains all the routes variants
+          that are currently active in the mock server. Using the Blue <u><i>Save Custom Mock</i></u> button (
+          <b-button variant="primary" size="sm"><BIconFolderPlus /></b-button>), you can save this current combination
+          of route variants as a custom mock, which you can apply later. Please note that this button will not be
+          visible when the custom variants list is empty.<br>
+          From the <b-button variant="dark" size="sm">Custom Mocks</b-button> section in the Dashboard, you can expand
+          any saved custom mock, view the routes variants list, apply it by using the Apply button. And if you want,
+          you can use the delete button to delete the custom mock.
         </li>
       </ol>
     </div>
+    <!--eslint-enable-->
   </b-card>
 </template>
 
 <script>
+import { BIconFolderPlus, BIconXCircleFill } from 'bootstrap-vue'
 import SettingsMiddleware from '../../middleware/SettingsMiddleware'
 
 export default {
   name: 'DocPage',
+  components: {
+    BIconXCircleFill,
+    BIconFolderPlus
+  },
   middleware: [SettingsMiddleware]
 }
 </script>
