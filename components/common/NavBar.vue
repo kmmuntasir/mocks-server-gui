@@ -15,7 +15,7 @@
           <span>Misc.</span>
         </template>
         <b-dropdown-item :to="Routes.doc">
-          <small><BIconJournalText /></small>
+          <small><BIconJournalBookmarkFill /></small>
           <span>Documentation</span>
         </b-dropdown-item>
         <b-dropdown-item :to="Routes.about">
@@ -28,7 +28,13 @@
 </template>
 
 <script>
-import { BIconGearFill, BIconGrid1x2Fill, BIconEmojiSunglassesFill, BIconJournalText } from 'bootstrap-vue'
+import {
+  BIconGearFill,
+  BIconGrid1x2Fill,
+  BIconEmojiSunglassesFill,
+  BIconJournalText,
+  BIconJournalBookmarkFill
+} from 'bootstrap-vue'
 import Routes from '../../constants/Routes'
 
 export default {
@@ -37,7 +43,8 @@ export default {
     BIconGearFill,
     BIconGrid1x2Fill,
     BIconEmojiSunglassesFill,
-    BIconJournalText
+    BIconJournalText,
+    BIconJournalBookmarkFill
   },
   data () {
     return {
