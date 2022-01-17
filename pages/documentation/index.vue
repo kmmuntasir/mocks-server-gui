@@ -73,15 +73,13 @@
 
 <script>
 import { BIconFolderPlus, BIconXCircleFill } from 'bootstrap-vue'
-import SettingsMiddleware from '../../middleware/SettingsMiddleware'
 
 export default {
   name: 'DocPage',
   components: {
     BIconXCircleFill,
     BIconFolderPlus
-  },
-  middleware: [SettingsMiddleware]
+  }
 }
 </script>
 

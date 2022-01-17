@@ -175,6 +175,7 @@ export default {
     goToAppSettings () {
       if (confirm('This will remove current app settings. Are you sure?')) {
         application.removeSettings()
+        this.$root.$emit(RootEvent.PROCEED_TO_SETUP)
         this.$router.push(Routes.root)
       }
     },

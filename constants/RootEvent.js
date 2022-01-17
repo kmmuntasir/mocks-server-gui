@@ -1,5 +1,7 @@
 export default {
   INVOKE_NOTIFICATION: 'invokeNotification',
+  PROCEED_TO_SETUP: 'proceedToSetup',
+  PROCEED_TO_DASHBOARD: 'proceedToDashboard',
   SELECT_MOCK_ON_STARTUP: 'selectMockOnStartup',
   UPDATE_MOCK: 'updateMock',
   APPLY_VARIANT: 'applyVariant',

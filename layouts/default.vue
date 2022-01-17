@@ -3,10 +3,10 @@
     <AppHeader />
     <b-container fluid class="defaultLayoutContainer">
       <b-row>
-        <b-col class="col-10">
+        <b-col :class="contentClass">
           <Nuxt />
         </b-col>
-        <b-col class="col-2">
+        <b-col v-if="appSettings" :class="sideBarClass">
           <RightSideBar />
         </b-col>
       </b-row>
@@ -38,6 +38,7 @@ import AppHeader from '../components/common/AppHeader'
 import RightSideBar from '../components/common/RightSideBar'
 import RootEvent from '../constants/RootEvent'
 import application from '../helpers/application'
+import config from '../constants/config'
 
 export default {
   name: 'DefaultLayout',
@@ -52,20 +53,34 @@ export default {
         message: 'Notification',
         variant: 'Some Message'
       },
-      appSettings: application.getSettings()
+      appSettings: application.getSettings(),
+      contentClass: '',
+      sideBarClass: ''
     }
   },
   head () {
     return {
-      title: this.appSettings.brandName
+      title: this.appSettings?.brandName ?? config.BRAND_NAME
     }
   },
   mounted () {
+    this.$root.$on(RootEvent.PROCEED_TO_DASHBOARD, () => {
+      this.fetchAppSettings()
+    })
+    this.$root.$on(RootEvent.PROCEED_TO_SETUP, () => {
+      this.fetchAppSettings()
+    })
     this.$root.$on(RootEvent.INVOKE_NOTIFICATION, (notification) => {
       this.showNotification(notification)
     })
+    this.fetchAppSettings()
   },
   methods: {
+    fetchAppSettings () {
+      this.appSettings = application.getSettings()
+      this.contentClass = this.appSettings ? 'col-10' : ''
+      this.sideBarClass = this.appSettings ? 'col-2' : ''
+    },
     showNotification (notification) {
       this.notification.title = notification.title
       this.notification.message = notification.message

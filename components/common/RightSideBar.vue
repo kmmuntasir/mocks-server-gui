@@ -97,10 +97,8 @@ export default {
       loading: true
     }
   },
-  created () {
-    this.fetchServerSettings()
-  },
   mounted () {
+    this.fetchServerSettings()
     this.$root.$on(RootEvent.UPDATE_MOCK, () => {
       this.server.settings.mock = settings.getCurrentMock()
     })

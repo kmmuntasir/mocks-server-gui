@@ -1,10 +1,14 @@
 <template>
   <b-navbar-nav class="ml-auto">
-    <nuxt-link class="nav-link" :to="Routes.dashboard">
+    <nuxt-link v-if="!appSettings" class="nav-link" :to="Routes.root">
+      <small><BIconWrench /></small>
+      <span>Setup</span>
+    </nuxt-link>
+    <nuxt-link v-if="appSettings" class="nav-link" :to="Routes.dashboard">
       <small><BIconGrid1x2Fill /></small>
       <span>Dashboard</span>
     </nuxt-link>
-    <nuxt-link class="nav-link nuxt-link-active" :to="Routes.settings">
+    <nuxt-link v-if="appSettings" class="nav-link nuxt-link-active" :to="Routes.settings">
       <small><BIconGearFill /></small>
       <span>Settings</span>
     </nuxt-link>
@@ -33,9 +37,12 @@ import {
   BIconGrid1x2Fill,
   BIconEmojiSunglassesFill,
   BIconJournalText,
-  BIconJournalBookmarkFill
+  BIconJournalBookmarkFill,
+  BIconWrench
 } from 'bootstrap-vue'
 import Routes from '../../constants/Routes'
+import application from '../../helpers/application'
+import RootEvent from '../../constants/RootEvent'
 
 export default {
   name: 'NavBar',
@@ -44,11 +51,26 @@ export default {
     BIconGrid1x2Fill,
     BIconEmojiSunglassesFill,
     BIconJournalText,
-    BIconJournalBookmarkFill
+    BIconJournalBookmarkFill,
+    BIconWrench
   },
   data () {
     return {
-      Routes
+      Routes,
+      appSettings: application.getSettings()
+    }
+  },
+  mounted () {
+    this.$root.$on(RootEvent.PROCEED_TO_DASHBOARD, () => {
+      this.fetchAppSettings()
+    })
+    this.$root.$on(RootEvent.PROCEED_TO_SETUP, () => {
+      this.fetchAppSettings()
+    })
+  },
+  methods: {
+    fetchAppSettings () {
+      this.appSettings = application.getSettings()
     }
   }
 }

@@ -16,6 +16,7 @@
               v-model="setup.brandName"
               placeholder="Example: My Awesome Mock-Server"
               required
+              autofocus
             />
           </b-form-group>
           <b-form-group label="Base URL">
@@ -53,10 +54,10 @@
 import Routes from '../constants/Routes'
 import application from '../helpers/application'
 import Locale from '../constants/Locale'
+import RootEvent from '../constants/RootEvent'
 
 export default {
   name: 'DefaultPage',
-  layout: 'SetupLayout',
   data () {
     return {
       title: 'Setup | ' + Locale.BRAND_NAME,
@@ -100,6 +101,7 @@ export default {
     async proceed () {
       this.setup.loadedFromFile = this.settingsLoadedFromFile
       if (await application.validateSettings(this.setup)) {
+        this.$root.$emit(RootEvent.PROCEED_TO_DASHBOARD)
         await this.$router.push(Routes.dashboard)
       } else if (this.settingsLoadedFromFile) {
         this.alert = {
@@ -121,7 +123,7 @@ export default {
 
 <style scoped>
   .fullHeight {
-    height: 100vh !important;
+    height: calc(100vh - 86px) !important;
   }
   div.setupWizard {
     width: 100vw !important;
