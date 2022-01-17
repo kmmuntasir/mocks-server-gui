@@ -9,7 +9,7 @@
     >
       <b-button class="mb-1 text-left p-0" variant="primary" block>
         <b-badge variant="light" class="float-right mr-1 mt-1">
-          Active
+          Active Mock
         </b-badge>
         <p class="h5 mt-4 mb-4 p-0 pl-1 pr-1 text-center">
           {{ server.settings.mock }}

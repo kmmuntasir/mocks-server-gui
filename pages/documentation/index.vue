@@ -38,4 +38,9 @@ export default {
 
 <style scoped>
 
+div.card-body {
+  height: calc(100vh - 144px) !important;
+  overflow-y: scroll;
+}
+
 </style>

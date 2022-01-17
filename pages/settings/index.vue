@@ -201,4 +201,9 @@ export default {
     font-size: 0.8rem;
     padding: 0.10rem 0.20rem;
   }
+
+  div.card-body {
+    height: calc(100vh - 140px) !important;
+    overflow-y: scroll;
+  }
 </style>
